@@ -7,7 +7,7 @@ Desktop application to follow a process of collaborative teamwork and face-to-fa
 * [Client Details](#client-details)
 * [Environment URLS](#environment-urls)
 * [Team](#team)
-* [Management resources](#management-resources)
+* [Management resources](#management-tools)
 * [Setup the project](#setup-the-project)
 * [Running the Flask server](#running-the-flask-server)
 * [Running the Electron app](#running-the-electron-app)
