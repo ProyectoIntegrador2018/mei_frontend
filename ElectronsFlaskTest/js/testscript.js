@@ -3,7 +3,7 @@ $(function(){
     url : "http://127.0.0.1:5000/",
     type : "GET",
     success : function(response){
-      $('#title').text(response);
+      $('#fromfirebase').html(response);
       console.log(response);
     },
     error : function(error){
