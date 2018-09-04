@@ -7,9 +7,9 @@ Desktop application to follow a process of collaborative teamwork and face-to-fa
 * [Client Details](#client-details)
 * [Environment URLS](#environment-urls)
 * [Team](#team)
-* [Management resources](#management-tools)
+* [Management tools](#management-tools)
+* [Requirements](#requirements)
 * [Setup the project](#setup-the-project)
-* [Running the Flask server](#running-the-flask-server)
 * [Running the Electron app](#running-the-electron-app)
 
 
@@ -42,7 +42,22 @@ Desktop application to follow a process of collaborative teamwork and face-to-fa
 * [Heroku](https://crowdfront-staging.herokuapp.com/)
 * [Documentation](https://drive.google.com/open?id=16-13j8v9uVM7V9z2Gq5vwgKBxlPyn1k9)
 
-## Development
+### Requirements
+
+* [Node.js and npm](https://www.npmjs.com/get-npm)<br/>
+You can verify that Node.js and npm are installed by running:
+```bash
+$ node -v
+```
+```bash
+$ npm -v
+```
+
+* [Electron](https://www.npmjs.com/package/electron)<br/>
+Once you have installed Node.js and npm you can install Electron by running:
+```bash
+$ npm install electron --save-dev
+```
 
 ### Setup the project
 
@@ -56,37 +71,6 @@ $ git git@github.com:ProyectoIntegrador2018/mei_frontend.git
 ```bash
 $ cd ElectronFlaskTest
 ```
-
-### Running the Flask server
-
-1. Set the FLASK_APP environment variable
-
-#### OSX
-```bash
-$ export FLASK_APP=hello.py
-```
-
-#### Windows
-```bash
-$ set FLASK_APP=hello.py
-```
-
-This means the project is up and running.
-
-2. Start the server
-```bash
-$ flask run
-```
-
-You should see the following output:
-```bash
- * Serving Flask app "hello"
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-```
-
-This means that the server is up and running.
-
-**Take note that if you kill this process you will kill the web service, and you will probably need to lift it up again.**
 
 ### Running the Electron app
 ```bash
