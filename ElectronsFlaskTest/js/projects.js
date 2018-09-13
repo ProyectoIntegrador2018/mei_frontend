@@ -63,3 +63,27 @@ function getUserProjects(userID){
 	  }
 	});
 }
+
+function createProject(name, org, creationDate, context, owner){
+	$.ajax({
+        url : "http://127.0.0.1:5000/create_project",
+		type : "POST",
+		data : {
+			name : name,
+			org : org,
+			creationDate : creationDate,
+			context : context,
+			owner : owner
+		},
+		success : function (response) {
+			if (response['Success']){
+                var projectCard = getProjectCard(name, org, creationDate, context)
+				$("#userProjects").append(projectCard)
+            }
+            console.log(response)
+        },
+		error : function (error) {
+            console.log("Error: " + error);
+        }
+	});
+}
