@@ -48,6 +48,11 @@ body {
   border-top-right-radius: 0;
 }
 
+#errorMessage {
+  font-weight: bold;
+  color: red;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
