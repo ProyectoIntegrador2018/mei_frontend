@@ -10,12 +10,28 @@
 		<link href="../styles/login.css" rel="stylesheet">
 	</head>
 	<body>
+
+
 		<div class="container">
 			<h1 id="welcome"></h1>
 			<h2>My projects</h2>
 			<div id="userProjects">
 			</div>
 		</div>
+
+		<div class="container">
+			<form class="form-signin">
+				<h1 id="h3 mb-3 font-weight-normal">Create Project</h1>
+				<label for="userProjects" class="sr-only">Name</label>
+				<input type="text" id="inputProjectName" class="form-control" placeholder="Name" required>
+				<label for="userProjects" class="sr-only">Organization</label>
+				<input type="text" id="inputOrg" class="form-control" placeholder="Org" required>
+				<label for="userProjects" class="sr-only">Context</label>
+				<input type="text" id="inputContext" class="form-control" placeholder="Context" required>
+				<button class="btn btn-lg btn-primary btn-block" type="submit" id="create_project">Create</button>
+			</form>
+		</div>
+
 		<footer class="footer text-center">
 			<p class="text-muted">&copy; 2018</p>
 		</footer>

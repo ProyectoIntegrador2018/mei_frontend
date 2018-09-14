@@ -1,6 +1,50 @@
+var USER_ID = null
+
 $(document).ready(function(){
 	getSessionInfo()
 })
+
+$("#create_project").click(function(e){
+    e.preventDefault()
+    var name = $("#inputProjectName").val()
+    var org = $("#inputOrg").val()
+    var context = $("#inputContext").val()
+    var date;
+    date = new Date();
+    date = date.getUTCFullYear() + '-' +
+        ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + date.getUTCDate()).slice(-2) + ' ' +
+        ('00' + date.getUTCHours()).slice(-2) + ':' +
+        ('00' + date.getUTCMinutes()).slice(-2) + ':' +
+        ('00' + date.getUTCSeconds()).slice(-2);
+
+
+    createProject(name, org, date, context, USER_ID)
+})
+
+function createProject (name, org, creationDate, context, owner){
+    $.ajax({
+        url : "http://127.0.0.1:5000/create_project",
+        type : "POST",
+        data : {
+            name : name,
+            org : org,
+            creationDate : creationDate,
+            context : context,
+            owner : owner
+        },
+        success : function (response) {
+            if (response['Success']){
+                var projectCard = getProjectCard(name, org, creationDate, context)
+                $("#userProjects").append(projectCard)
+            }
+            console.log(response)
+        },
+        error : function (error) {
+            console.log("Error: " + error);
+        }
+    });
+}
 
 function getProjectCard(title, organization, creationDate, context){
 	var projectCard = `
@@ -26,6 +70,7 @@ function getSessionInfo(){
 	    if (response['Success']){
 	      $("#welcome").html("Welcome " + response['name'])
 	      getUserProjects(response['userID'])
+          USER_ID = response['userID']
 	    }
 	  },
 	  error : function(error){
@@ -61,29 +106,5 @@ function getUserProjects(userID){
 	  error : function(error){
 	    console.log("Error: " + error);
 	  }
-	});
-}
-
-function createProject(name, org, creationDate, context, owner){
-	$.ajax({
-        url : "http://127.0.0.1:5000/create_project",
-		type : "POST",
-		data : {
-			name : name,
-			org : org,
-			creationDate : creationDate,
-			context : context,
-			owner : owner
-		},
-		success : function (response) {
-			if (response['Success']){
-                var projectCard = getProjectCard(name, org, creationDate, context)
-				$("#userProjects").append(projectCard)
-            }
-            console.log(response)
-        },
-		error : function (error) {
-            console.log("Error: " + error);
-        }
 	});
 }
