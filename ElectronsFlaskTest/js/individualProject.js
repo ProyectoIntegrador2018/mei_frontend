@@ -75,7 +75,8 @@ $("#saveProjectChanges").click(function(e){
 				name: newProjectTitle,
 				org: newProjectOrganization,
 				creationDate: newProjectDate,
-				context: newProjectContext
+				context: newProjectContext,
+				projectID : localStorage.getItem("projectID")
 			},
 			success : function (response){
 				if (response['Success']){
