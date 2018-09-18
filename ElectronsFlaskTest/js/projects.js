@@ -35,8 +35,7 @@ function createProject (name, org, creationDate, context, owner){
         },
         success : function (response) {
             if (response['Success']){
-                var projectCard = getProjectCard(name, org, creationDate, context)
-                $("#userProjects").append(projectCard)
+                window.location.replace("projects.html")
             }
             console.log(response)
         },
@@ -46,9 +45,9 @@ function createProject (name, org, creationDate, context, owner){
     });
 }
 
-function getProjectCard(title, organization, creationDate, context){
+function getProjectCard(id,title, organization, creationDate, context){
 	var projectCard = `
-		<div class="card w-75 mt-2">
+		<div id="${id}" class="card w-75 mt-2" onclick="getSessions(${id})">
 			<div class="card-body">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text">${organization}</h6>
@@ -57,6 +56,11 @@ function getProjectCard(title, organization, creationDate, context){
 			</div>
 		</div>`
 	return projectCard
+}
+
+function getSessions(id){
+	localStorage.setItem("id", id)
+	window.location.replace("session.html")
 }
 
 function getSessionInfo(){
@@ -93,7 +97,8 @@ function getUserProjects(userID){
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
 	  				var project = projects[key]
-	  				var projectCard = getProjectCard(project['name'], project['org'], project['creationDate'], project['context'])
+	  				console.log(project)
+	  				var projectCard = getProjectCard(project['projectID'],project['name'], project['org'], project['creationDate'], project['context'])
 	  				$("#userProjects").append(projectCard)
 	  			})
 	  		}
