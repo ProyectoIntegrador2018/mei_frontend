@@ -12,6 +12,21 @@ $("#back").click(function(e){
 	window.location.replace("projects.html")
 })
 
+$("#cancelProjectChanges").click(function(e){
+	e.preventDefault()
+	$("#inputProjectNameEdit").val(projectTitle)
+	$("#inputOrgEdit").val(projectOrganization)
+	$("#inputProjectDateEdit").val(projectDate)
+	$("#inputContextEdit").val(projectContext)
+
+	$("#inputProjectNameEdit").attr('disabled', true);
+	$("#inputOrgEdit").attr('disabled', true);
+	$("#inputProjectDateEdit").attr('disabled', true);
+	$("#inputContextEdit").attr('disabled', true);
+
+	$("#editButtons").css('display', 'none')
+})
+
 $("#saveProjectChanges").click(function(e){
 	e.preventDefault();
 	var newProjectTitle = $("#inputProjectNameEdit").val()
