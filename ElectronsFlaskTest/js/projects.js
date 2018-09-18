@@ -47,17 +47,24 @@ function createProject (name, org, creationDate, context, owner){
     });
 }
 
-function getProjectCard(projectID, title, organization, creationDate, context){
+function getProjectCard(id,title, organization, creationDate, context){
 	var projectCard = `
 		<div class="card mt-2 mb-2">
-			<div class="card-body shadow-sm projectCard" id="projectCard-${projectID}">
+			<div class="card-body shadow-sm projectCard">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text"><b>Organization: </b>${organization}</h6>
 				<p class="card-text"><b>Description: </b>${context}</p>
 				<p class="card-text">${creationDate}</p>
+				<button type="button" class="btn btn-primary" onclick="getProjectInfo(${id})">Edit</button>
+				<button type="button" class="btn btn-primary" onclick="getSessions(${id})">Sessions</button>
 			</div>
 		</div>`
 	return projectCard
+}
+
+function getSessions(id){
+	localStorage.setItem("id", id)
+	window.location.replace("session.html")
 }
 
 function getSessionInfo(){
@@ -110,18 +117,7 @@ function getUserProjects(userID){
 	});
 }
 
-function saveProjectID(projectID){
-	$.ajax({
-	  url : "http://127.0.0.1:5000/save_project_id",
-	  type : "POST",
-	  data : {
-	  	projectID : projectID
-	  },
-	  success : function(response){
-	  	window.location.replace("individualProject.html")
-	  },
-	  error : function(error){
-	    console.log("Error: " + error);
-	  }
-	});
+function getProjectInfo(projectID){
+	localStorage.setItem("projectID", projectID)
+	window.location.replace("individualProject.html")
 }

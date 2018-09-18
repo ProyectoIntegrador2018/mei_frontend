@@ -75,7 +75,8 @@ $("#saveProjectChanges").click(function(e){
 				name: newProjectTitle,
 				org: newProjectOrganization,
 				creationDate: newProjectDate,
-				context: newProjectContext
+				context: newProjectContext,
+				projectID : localStorage.getItem("projectID")
 			},
 			success : function (response){
 				if (response['Success']){
@@ -106,7 +107,10 @@ $("#editProject").click(function(e){
 function getProjectInformation(){
 	$.ajax({
 	    url : "http://127.0.0.1:5000/get_project_info",
-	    type : "POST",
+		type : "POST",
+		data : {
+			projectID : localStorage.getItem("projectID")
+		},
 	    success : function (response) {
 	        if (response['Success']){
 	        	projectID = response['projectID']
