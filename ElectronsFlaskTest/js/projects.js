@@ -4,6 +4,12 @@ $(document).ready(function(){
 	getSessionInfo()
 })
 
+$(document).on("click", ".projectCard", function(e){
+	var id = $(this).attr("id")
+	id = id.substring(id.search("-") + 1, id.length)
+	saveProjectID(id)
+})
+
 $("#create_project").click(function(e){
     e.preventDefault()
     var name = $("#inputProjectName").val()
@@ -13,11 +19,7 @@ $("#create_project").click(function(e){
     date = new Date();
     date = date.getUTCFullYear() + '-' +
         ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-        ('00' + date.getUTCDate()).slice(-2) + ' ' +
-        ('00' + date.getUTCHours()).slice(-2) + ':' +
-        ('00' + date.getUTCMinutes()).slice(-2) + ':' +
-        ('00' + date.getUTCSeconds()).slice(-2);
-
+        ('00' + date.getUTCDate()).slice(-2) + ' ';
 
     createProject(name, org, date, context, USER_ID)
 })
@@ -35,8 +37,7 @@ function createProject (name, org, creationDate, context, owner){
         },
         success : function (response) {
             if (response['Success']){
-                var projectCard = getProjectCard(name, org, creationDate, context)
-                $("#userProjects").append(projectCard)
+                window.location.replace("projects.html")
             }
             console.log(response)
         },
@@ -46,13 +47,13 @@ function createProject (name, org, creationDate, context, owner){
     });
 }
 
-function getProjectCard(title, organization, creationDate, context){
+function getProjectCard(projectID, title, organization, creationDate, context){
 	var projectCard = `
-		<div class="card w-75 mt-2">
-			<div class="card-body">
+		<div class="card mt-2 mb-2">
+			<div class="card-body shadow-sm projectCard" id="projectCard-${projectID}">
 				<h5 class="card-title">${title}</h5>
-				<h6	class="card-text">${organization}</h6>
-				<p class="card-text">${context}</p>
+				<h6	class="card-text"><b>Organization: </b>${organization}</h6>
+				<p class="card-text"><b>Description: </b>${context}</p>
 				<p class="card-text">${creationDate}</p>
 			</div>
 		</div>`
@@ -93,7 +94,7 @@ function getUserProjects(userID){
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
 	  				var project = projects[key]
-	  				var projectCard = getProjectCard(project['name'], project['org'], project['creationDate'], project['context'])
+	  				var projectCard = getProjectCard(project['projectID'], project['name'], project['org'], project['creationDate'], project['context'])
 	  				$("#userProjects").append(projectCard)
 	  			})
 	  		}
@@ -102,6 +103,22 @@ function getUserProjects(userID){
 	  		}
 	  	}
 	  	console.log(response)
+	  },
+	  error : function(error){
+	    console.log("Error: " + error);
+	  }
+	});
+}
+
+function saveProjectID(projectID){
+	$.ajax({
+	  url : "http://127.0.0.1:5000/save_project_id",
+	  type : "POST",
+	  data : {
+	  	projectID : projectID
+	  },
+	  success : function(response){
+	  	window.location.replace("individualProject.html")
 	  },
 	  error : function(error){
 	    console.log("Error: " + error);
