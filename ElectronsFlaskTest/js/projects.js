@@ -4,12 +4,6 @@ $(document).ready(function(){
 	getSessionInfo()
 })
 
-$(document).on("click", ".projectCard", function(e){
-	var id = $(this).attr("id")
-	id = id.substring(id.search("-") + 1, id.length)
-	saveProjectID(id)
-})
-
 $("#create_project").click(function(e){
     e.preventDefault()
     var name = $("#inputProjectName").val()

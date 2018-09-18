@@ -1,5 +1,3 @@
-.projectCard:hover { cursor: pointer; }
-
 .errorMessage {
 	color: red,
 	font-style: italic;
