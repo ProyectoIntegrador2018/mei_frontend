@@ -47,12 +47,13 @@ function createProject (name, org, creationDate, context, owner){
 
 function getProjectCard(id,title, organization, creationDate, context){
 	var projectCard = `
-		<div id="${id}" class="card w-75 mt-2" onclick="getSessions(${id})">
+		<div class="card w-75 mt-2">
 			<div class="card-body">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text">${organization}</h6>
 				<p class="card-text">${context}</p>
 				<p class="card-text">${creationDate}</p>
+				<button type="button" class="btn btn-primary" onclick="getSessions(${id})">Sessions</button>
 			</div>
 		</div>`
 	return projectCard

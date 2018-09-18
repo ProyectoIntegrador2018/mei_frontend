@@ -1,12 +1,12 @@
 PROJECT_ID = localStorage.getItem("id")
 
 $(document).ready(function(){
-	getProjectInfo(localStorage.getItem("id"))
+	getProjectSessions(localStorage.getItem("id"))
 })
 
-function getProjectInfo(projectID){
+function getProjectSessions(projectID){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/get_project_info",
+	  url : "http://127.0.0.1:5000/get_project_sessions",
 	  type : "POST",
 	  data : {
 	  	projectID : projectID
@@ -14,7 +14,7 @@ function getProjectInfo(projectID){
 	  success : function(response){
 	  	if (response['Success']){
 	  		console.log(response)
-	  		var sessions = response['Projects']
+	  		var sessions = response['Sessions']
 	  		keys = Object.keys(sessions)
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
