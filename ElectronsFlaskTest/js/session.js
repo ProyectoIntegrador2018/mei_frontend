@@ -37,8 +37,8 @@ function getProjectSessions(projectID){
 
 function getSessionCard(id,title, summary, creationDate){
 	var sessionCard = `
-		<div class="card w-75 mt-2">
-			<div class="card-body">
+		<div class="card mt-2 mb-2">
+			<div class="card-body shadow-sm">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text">${summary}</h6>
 				<p class="card-text">${creationDate}</p>
