@@ -9,26 +9,28 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	</head>
 	<body>
-
 		<nav class="navbar navbar-dark bg-primary">
   			<button id="back" type="button" class="btn btn-primary">Back</button>
 		</nav>
-
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 ml-auto">
+				<div class="col-md-12">
 					<h1 id="welcome"></h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
 					<h2>Sessions</h2>
 					<div  id="projectSessions"></div>
 				</div>
-				<div class="col-lg-6 mr-auto">
+				<div class="col-md-6">
+					<h2>Create session</h2>
 					<form class="form-signin">
-						<h1 id="h3 mb-3 font-weight-normal">Create Session</h1>
 						<label for="projectSessions" class="sr-only">Name</label>
-						<input type="text" id="inputSessionName" class="form-control" placeholder="Name" required>
+						<input type="text" id="inputSessionName" class="form-control mt-2 shadow-sm" placeholder="Name" required>
 						<label for="projectSessions" class="sr-only">Summary</label>
-						<input type="text" id="inputSummary" class="form-control" placeholder="Summary" required>
-						<button class="btn btn-lg btn-primary btn-block" type="submit" id="create_session">Create</button>
+						<input type="text" id="inputSummary" class="form-control mt-2 shadow-sm" placeholder="Summary" required>
+						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="create_session">Create</button>
 					</form>
 				</div>
 			</div>

@@ -11,19 +11,15 @@
 		<link href="../styles/projects.css" rel="stylesheet">
 	</head>
 	<body>
+		<nav class="navbar navbar-dark bg-primary">
+  			<button id="back" type="button" class="btn btn-primary">Back</button>
+				<h2 class = "text-white"> Project information </h2>
+			<button id="editProject" type="button" class="btn btn-primary">Edit Project</button>
+		</nav>
 		<div class="container" style="font-family: 'Roboto', sans-serif;">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>
-						<button id="back">Back</button>
-						Project information
-						<button id="editProject">Edit project</button>
-					</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<form>
+					<form class="mt-2">
 						<label for="inputProjectNameEdit">Name</label> <span id="titleErrorMessage" style="color: red"></span>
 						<input type="text" id="inputProjectNameEdit" class="form-control shadow-sm mb-2" placeholder="Name" required disabled="disabled">
 						<label for="inputOrgEdit">Organization</label> <span id="orgErrorMessage" style="color: red"></span>
