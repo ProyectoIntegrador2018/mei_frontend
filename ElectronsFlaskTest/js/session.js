@@ -19,7 +19,7 @@ function getProjectSessions(projectID){
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
 	  				var session = sessions[key]
-	  				var sessionCard = getSessionCard(session['name'],session['summary'], session['creationDate'])
+	  				var sessionCard = getSessionCard(session['sessionID'], session['name'],session['summary'], session['creationDate'])
 	  				$("#projectSessions").append(sessionCard)
 	  			})
 	  		}
@@ -35,17 +35,29 @@ function getProjectSessions(projectID){
 	});
 }
 
-function getSessionCard(title, summary, creationDate){
+function getSessionCard(id,title, summary, creationDate){
 	var sessionCard = `
 		<div class="card w-75 mt-2">
 			<div class="card-body">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text">${summary}</h6>
 				<p class="card-text">${creationDate}</p>
+				<button type="button" class="btn btn-primary" onclick="getSessionInfo(${id})">Edit</button>
+				<button type="button" class="btn btn-primary" onclick="startSession(${id})">Start</button>
 			</div>
 		</div>`
 	return sessionCard
 }
+
+function getSessionInfo(id) {
+	localStorage.setItem("SessionId", id)
+	window.location.replace("sessionInfo.html")
+}
+
+$("#back").click(function(e) {
+	e.preventDefault()
+	window.location.replace("projects.html")
+})
 
 $("#create_session").click(function(e){
     e.preventDefault()
