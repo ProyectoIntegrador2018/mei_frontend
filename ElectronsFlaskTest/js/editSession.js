@@ -153,26 +153,31 @@ $("#create_participant").click(function(e){
 })
 
 function createParticipant (name,email, role){
-    console.log(name,email, role, sessionID)
-    $.ajax({
-        url : "http://127.0.0.1:5000/create_participant",
-        type : "POST",
-        data : {
-            name : name,
-            email : email,
-            role : role,
-            sessionID : sessionID
-        },
-        success : function (response) {
-            if (response['Success']){
-                window.location.replace("sessionInfo.html")
+    if (name == "" || email == "" || role == ""){
+        $("#participantErrorMessage").html("<li>Please complete all the fields</li>")
+    }
+    else{
+        $("#participantErrorMessage").html("")
+        $.ajax({
+            url : "http://127.0.0.1:5000/create_participant",
+            type : "POST",
+                data : {
+                name : name,
+                email : email,
+                role : role,
+                sessionID : sessionID
+            },
+            success : function (response) {
+                if (response['Success']){
+                     window.location.replace("sessionInfo.html")
+                }
+                console.log(response)
+            },
+            error : function (error) {
+                console.log("Error: " + error);
             }
-            console.log(response)
-        },
-        error : function (error) {
-            console.log("Error: " + error);
-        }
-    });
+        });
+    }
 }
 
 function deleteParticipant(email) {
