@@ -201,6 +201,11 @@ function deleteParticipant(email) {
     });
 }
 
+function editParticipant(email){
+	localStorage.setItem("participantIDtoEdit", email)
+	window.location.replace("participantInfo.html")
+}
+
 function getParticipantCard(name, email, role){
     var participantCard = `
 		<div class="card mt-2 mb-2">
@@ -208,6 +213,7 @@ function getParticipantCard(name, email, role){
 				<h5 class="card-title">${name}</h5>
 				<h6	class="card-text">${email}</h6>
 				<p class="card-text">${role}</p>
+				<button type="button" class="btn btn-primary" onclick="editParticipant('${email}', ${sessionID})">Edit</button>
 				<button type="button" class="btn btn-primary" onclick="deleteParticipant('${email}')">Delete</button>
 			</div>
 		</div>`
