@@ -13,13 +13,14 @@ $("#create_project").click(function(e){
     date = new Date();
     date = date.getUTCFullYear() + '-' +
         ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
-        ('00' + date.getUTCDate()).slice(-2) + ' ' +
-        ('00' + date.getUTCHours()).slice(-2) + ':' +
-        ('00' + date.getUTCMinutes()).slice(-2) + ':' +
-        ('00' + date.getUTCSeconds()).slice(-2);
+        ('00' + date.getUTCDate()).slice(-2) + ' ';
 
-
-    createProject(name, org, date, context, USER_ID)
+    if(name == "" || org == "" || context == ""){
+        $("#errorMessageP").html("<li>Please complete all the fields</li>")
+	} else {
+        $("#errorMessageP").html("")
+        createProject(name, org, date, context, USER_ID)
+	}
 })
 
 function createProject (name, org, creationDate, context, owner){
@@ -35,8 +36,7 @@ function createProject (name, org, creationDate, context, owner){
         },
         success : function (response) {
             if (response['Success']){
-                var projectCard = getProjectCard(name, org, creationDate, context)
-                $("#userProjects").append(projectCard)
+                window.location.replace("projects.html")
             }
             console.log(response)
         },
@@ -46,17 +46,24 @@ function createProject (name, org, creationDate, context, owner){
     });
 }
 
-function getProjectCard(title, organization, creationDate, context){
+function getProjectCard(id,title, organization, creationDate, context){
 	var projectCard = `
-		<div class="card w-75 mt-2">
-			<div class="card-body">
+		<div class="card mt-2 mb-2">
+			<div class="card-body shadow-sm projectCard">
 				<h5 class="card-title">${title}</h5>
-				<h6	class="card-text">${organization}</h6>
-				<p class="card-text">${context}</p>
+				<h6	class="card-text"><b>Organization: </b>${organization}</h6>
+				<p class="card-text"><b>Description: </b>${context}</p>
 				<p class="card-text">${creationDate}</p>
+				<button type="button" class="btn btn-primary" onclick="getProjectInfo(${id})">Edit</button>
+				<button type="button" class="btn btn-primary" onclick="getSessions(${id})">Sessions</button>
 			</div>
 		</div>`
 	return projectCard
+}
+
+function getSessions(id){
+	localStorage.setItem("id", id)
+	window.location.replace("session.html")
 }
 
 function getSessionInfo(){
@@ -93,7 +100,7 @@ function getUserProjects(userID){
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
 	  				var project = projects[key]
-	  				var projectCard = getProjectCard(project['name'], project['org'], project['creationDate'], project['context'])
+	  				var projectCard = getProjectCard(project['projectID'], project['name'], project['org'], project['creationDate'], project['context'])
 	  				$("#userProjects").append(projectCard)
 	  			})
 	  		}
@@ -107,4 +114,9 @@ function getUserProjects(userID){
 	    console.log("Error: " + error);
 	  }
 	});
+}
+
+function getProjectInfo(projectID){
+	localStorage.setItem("projectID", projectID)
+	window.location.replace("individualProject.html")
 }
