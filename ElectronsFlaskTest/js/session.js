@@ -20,7 +20,12 @@ function getProjectSessions(projectID){
 	  		if (keys.length > 0){
 	  			keys.forEach(function(key){
 	  				var session = sessions[key]
-	  				var sessionCard = getSessionCard(session['sessionID'], session['name'],session['summary'], session['creationDate'])
+	  				var sessionCard = getSessionCard(
+	  					session['sessionID'], 
+	  					session['name'],
+	  					session['summary'], 
+	  					session['triggeringQuestion'], 
+	  					session['creationDate'])
 	  				$("#projectSessions").append(sessionCard)
 	  			})
 	  		}
@@ -36,12 +41,13 @@ function getProjectSessions(projectID){
 	});
 }
 
-function getSessionCard(id,title, summary, creationDate){
+function getSessionCard(id,title, summary, triggeringQuestion, creationDate){
 	var sessionCard = `
 		<div class="card mt-2 mb-2">
 			<div class="card-body shadow-sm">
 				<h5 class="card-title">${title}</h5>
 				<h6	class="card-text">${summary}</h6>
+				<h6	class="card-text">${triggeringQuestion}</h6>
 				<p class="card-text">${creationDate}</p>
 				<button type="button" class="btn btn-primary" onclick="getSessionInfo(${id})">Edit</button>
 				<button type="button" class="btn btn-primary" onclick="startSession(${id})">Start</button>
@@ -64,6 +70,7 @@ $("#create_session").click(function(e){
     e.preventDefault()
     var name  = $("#inputSessionName").val()
     var summary = $("#inputSummary").val()
+    var triggeringQuestion = $("#inputTriggeringQuestion").val()
     console.log(summary)
     var date;
     date = new Date();
@@ -75,10 +82,10 @@ $("#create_session").click(function(e){
         ('00' + date.getUTCSeconds()).slice(-2);
 
 
-    createSession(name,summary, date)
+    createSession(name, summary, triggeringQuestion, date)
 })
 
-function createSession (name,summary, date){
+function createSession (name,summary, triggeringQuestion, date){
 	if (name == "" || summary == "" || date == ""){
 		$("#errorMessage").html("<li>Please complete all the fields</li>")
 	}
@@ -90,6 +97,7 @@ function createSession (name,summary, date){
 		    data : {
 		        name : name,
 		        summary : summary,
+		        triggeringQuestion : triggeringQuestion,
 		        creationDate : date,
 		        projectID : PROJECT_ID
 		    },

@@ -3,7 +3,7 @@ var sessionTitle = null
 var sessionSummary = null
 var sessionCreationDate = null;
 
-function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newCreationDate){
+function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newTriggeringQuestion, newCreationDate){
 	var error = false
 	if (newSessionTitle == ""){
 		$("#titleErrorMessage").html("Field required")
@@ -19,6 +19,14 @@ function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newCrea
 	}
 	else{
 		$("#summaryErrorMessage").html("")
+	}
+
+	if (newTriggeringQuestion == ""){
+		$("#triggeringQuestionErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#triggeringQuestionErrorMessage").html("")
 	}
 
 	if (newCreationDate == ""){
@@ -45,13 +53,18 @@ $("#cancelSessionChanges").click(function(e){
 	e.preventDefault()
 	$("#inputSessionNameEdit").val(sessionTitle)
 	$("#inputSummaryEdit").val(sessionSummary)
+	$("#inputTriggeringQuestionEdit").val(triggeringQuestion)
 	$("#inputCreationDateEdit").val(sessionCreationDate)
 
 	$("#inputSessionNameEdit").attr('disabled', true);
 	$("#inputSummaryEdit").attr('disabled', true);
 	$("#inputCreationDateEdit").attr('disabled', true);
 
-	checkEditFieldSessionErrors($("#inputSessionNameEdit").val(), $("#inputSummaryEdit").val(), $("#inputCreationDateEdit").val());
+	checkEditFieldSessionErrors(
+		$("#inputSessionNameEdit").val(), 
+		$("#inputSummaryEdit").val(),
+		$("#inputTriggeringQuestionEdit").val(), 
+		$("#inputCreationDateEdit").val());
 
 	$("#editButtons").css('display', 'none')
 })
@@ -60,8 +73,9 @@ $("#saveSessionChanges").click(function(e){
 	e.preventDefault();
 	var newSessionTitle = $("#inputSessionNameEdit").val()
 	var newSessionSummary = $("#inputSummaryEdit").val()
+	var newTriggeringQuestion = $("#inputTriggeringQuestionEdit").val()
 	var newCreationDate = $("#inputCreationDateEdit").val()
-	var error = checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newCreationDate);
+	var error = checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newTriggeringQuestion, newCreationDate);
 	if (!error){
 		$.ajax({
 			url : "http://127.0.0.1:5000/edit_session",
@@ -69,6 +83,7 @@ $("#saveSessionChanges").click(function(e){
 			data : {
 				name: newSessionTitle,
 				summary: newSessionSummary,
+				triggeringQuestion : newTriggeringQuestion,
 				creationDate: newCreationDate,
 				sessionID : localStorage.getItem("SessionId")
 			},
@@ -87,10 +102,12 @@ $("#saveSessionChanges").click(function(e){
 $("#editSession").click(function(e){
 	sessionTitle = $("#inputSessionNameEdit").val()
 	sessionSummary = $("#inputSummaryEdit").val()
+	sessionTriggeringQuestion = $("#inputTriggeringQuestionEdit").val()
 	sessionCreationDate = $("#inputCreationDateEdit").val()
 
 	$("#inputSessionNameEdit").attr('disabled', false);
 	$("#inputSummaryEdit").attr('disabled', false);
+	$("#inputTriggeringQuestionEdit").attr('disabled', false);
 	$("#inputCreationDateEdit").attr('disabled', false);
 
 	$("#editButtons").css('display', 'block')
@@ -108,6 +125,7 @@ function getSessionInformation(){
 	        	sessionID = localStorage.getItem("SessionId")
 	            $("#inputSessionNameEdit").val(response['name'])
 	            $("#inputSummaryEdit").val(response['summary'])
+	            $("#inputTriggeringQuestionEdit").val(response['triggeringQuestion'])
 	            $("#inputCreationDateEdit").val(response['creationDate'])
 	        }
 	        console.log(response)
