@@ -15,7 +15,12 @@ $("#create_project").click(function(e){
         ('00' + (date.getUTCMonth()+1)).slice(-2) + '-' +
         ('00' + date.getUTCDate()).slice(-2) + ' ';
 
-    createProject(name, org, date, context, USER_ID)
+    if(name == "" || org == "" || context == ""){
+        $("#errorMessageP").html("<li>Please complete all the fields</li>")
+	} else {
+        $("#errorMessageP").html("")
+        createProject(name, org, date, context, USER_ID)
+	}
 })
 
 function createProject (name, org, creationDate, context, owner){
