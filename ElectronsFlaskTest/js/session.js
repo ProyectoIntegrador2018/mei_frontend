@@ -2,6 +2,7 @@ PROJECT_ID = localStorage.getItem("id")
 
 $(document).ready(function(){
 	getProjectSessions(localStorage.getItem("id"))
+	getSessionParticipants()
 })
 
 function getProjectSessions(projectID){
