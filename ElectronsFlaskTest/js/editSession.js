@@ -3,6 +3,35 @@ var sessionTitle = null
 var sessionSummary = null
 var sessionCreationDate = null;
 
+function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newCreationDate){
+	var error = false
+	if (newSessionTitle == ""){
+		$("#titleErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#titleErrorMessage").html("")
+	}
+
+	if (newSessionSummary == ""){
+		$("#summaryErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#summaryErrorMessage").html("")
+	}
+
+	if (newCreationDate == ""){
+		$("#dateErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#dateErrorMessage").html("")
+	}
+
+	return error;
+}
+
 $(document).ready(function(){
 	getSessionInformation()
 	getSessionParticipants(sessionID)
@@ -22,6 +51,8 @@ $("#cancelSessionChanges").click(function(e){
 	$("#inputSummaryEdit").attr('disabled', true);
 	$("#inputCreationDateEdit").attr('disabled', true);
 
+	checkEditFieldSessionErrors($("#inputSessionNameEdit").val(), $("#inputSummaryEdit").val(), $("#inputCreationDateEdit").val());
+
 	$("#editButtons").css('display', 'none')
 })
 
@@ -30,32 +61,7 @@ $("#saveSessionChanges").click(function(e){
 	var newSessionTitle = $("#inputSessionNameEdit").val()
 	var newSessionSummary = $("#inputSummaryEdit").val()
 	var newCreationDate = $("#inputCreationDateEdit").val()
-
-	var error = false
-	if (newSessionTitle == ""){
-		$("#titleErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#titleErrorMessage").html("")
-	}
-
-	if (newSessionSummary== ""){
-		$("#summaryErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#summaryErrorMessage").html("")
-	}
-
-	if (newCreationDate == ""){
-		$("#dateErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#dateErrorMessage").html("")
-	}
-
+	var error = checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newCreationDate);
 	if (!error){
 		$.ajax({
 			url : "http://127.0.0.1:5000/edit_session",
@@ -79,9 +85,9 @@ $("#saveSessionChanges").click(function(e){
 })
 
 $("#editSession").click(function(e){
-	projectTitle = $("#inputSessionNameEdit").val()
-	projectOrganization = $("#inputSummaryEdit").val()
-	projectDate = $("#inputCreationDateEdit").val()
+	sessionTitle = $("#inputSessionNameEdit").val()
+	sessionSummary = $("#inputSummaryEdit").val()
+	sessionCreationDate = $("#inputCreationDateEdit").val()
 
 	$("#inputSessionNameEdit").attr('disabled', false);
 	$("#inputSummaryEdit").attr('disabled', false);

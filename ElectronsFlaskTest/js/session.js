@@ -79,24 +79,29 @@ $("#create_session").click(function(e){
 })
 
 function createSession (name,summary, date){
-	console.log(name,summary, date, PROJECT_ID)
-    $.ajax({
-        url : "http://127.0.0.1:5000/create_session",
-        type : "POST",
-        data : {
-        	name : name,
-            summary : summary,
-            creationDate : date,
-            projectID : PROJECT_ID
-        },
-        success : function (response) {
-            if (response['Success']){
-                 window.location.replace("session.html")
-            }
-            console.log(response)
-        },
-        error : function (error) {
-            console.log("Error: " + error);
-        }
-    });
+	if (name == "" || summary == "" || date == ""){
+		$("#errorMessage").html("<li>Please complete all the fields</li>")
+	}
+	else{
+		$("#errorMessage").html("")
+		$.ajax({
+		    url : "http://127.0.0.1:5000/create_session",
+		    type : "POST",
+		    data : {
+		        name : name,
+		        summary : summary,
+		        creationDate : date,
+		        projectID : PROJECT_ID
+		    },
+		    success : function (response) {
+		        if (response['Success']){
+		             window.location.replace("session.html")
+		        }
+		        console.log(response)
+		    },
+		    error : function (error) {
+		        console.log("Error: " + error);
+		    }
+		});
+	}
 }
