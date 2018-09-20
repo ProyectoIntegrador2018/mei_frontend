@@ -4,6 +4,43 @@ var projectOrganization = null
 var projectDate = null;
 var projectContext = null;
 
+function checkEditFieldSessionErrors(newProjectTitle, newProjectOrganization, newCreationDate, newProjectContext){
+	var error = false
+	if (newProjectTitle == ""){
+		$("#titleErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#titleErrorMessage").html("")
+	}
+
+	if (newProjectOrganization == ""){
+		$("#orgErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#orgErrorMessage").html("")
+	}
+
+	if (newCreationDate == ""){
+		$("#dateErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#dateErrorMessage").html("")
+	}
+
+	if (newProjectContext == ""){
+		$("#contextErrorMessage").html("Field required")
+		error = true
+	}
+	else{
+		$("#contextErrorMessage").html("")
+	}
+
+	return error;
+}
+
 $(document).ready(function(){
 	getProjectInformation()
 })
@@ -24,6 +61,8 @@ $("#cancelProjectChanges").click(function(e){
 	$("#inputProjectDateEdit").attr('disabled', true);
 	$("#inputContextEdit").attr('disabled', true);
 
+	checkEditFieldSessionErrors($("#inputProjectNameEdit").val(), $("#inputOrgEdit").val(), $("#inputProjectDateEdit").val(), $("#inputContextEdit").val())
+
 	$("#editButtons").css('display', 'none')
 })
 
@@ -34,39 +73,7 @@ $("#saveProjectChanges").click(function(e){
 	var newProjectDate = $("#inputProjectDateEdit").val()
 	var newProjectContext = $("#inputContextEdit").val()
 
-	var error = false
-	if (newProjectTitle == ""){
-		$("#titleErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#titleErrorMessage").html("")
-	}
-
-	if (newProjectOrganization == ""){
-		$("#orgErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#orgErrorMessage").html("")
-	}
-
-	if (newProjectDate == ""){
-		$("#dateErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#dateErrorMessage").html("")
-	}
-
-	if (newProjectContext == ""){
-		$("#contextErrorMessage").html("Field required")
-		error = true
-	}
-	else{
-		$("#contextErrorMessage").html("")
-	}
-
+	var error = checkEditFieldSessionErrors(newProjectTitle, newProjectOrganization, newProjectDate, newProjectContext)
 	if (!error){
 		$.ajax({
 			url : "http://127.0.0.1:5000/edit_project",
