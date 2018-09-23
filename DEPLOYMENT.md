@@ -1,6 +1,9 @@
 # Deployment
 [electron-builder](https://www.electron.build) is a complete solution to package and build a ready for distribution Electron app for macOS, Windows and Linux with “auto update” support out of the box.
 
+## Requirements (For now)
+Use the [production](https://github.com/ProyectoIntegrador2018/mei_frontend/tree/production) branch of this project.
+
 ## Installation
 [Yarn](https://yarnpkg.com/en/) is [strongly](https://github.com/electron-userland/electron-builder/issues/1147#issuecomment-276284477) recommended over npm.
 ```bash
