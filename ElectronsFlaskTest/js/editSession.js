@@ -2,6 +2,7 @@ var sessionID = localStorage.getItem("SessionId")
 var sessionTitle = null
 var sessionSummary = null
 var sessionCreationDate = null;
+var sessionTriggeringQuestion = null
 
 function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newTriggeringQuestion, newCreationDate){
 	var error = false
@@ -53,11 +54,12 @@ $("#cancelSessionChanges").click(function(e){
 	e.preventDefault()
 	$("#inputSessionNameEdit").val(sessionTitle)
 	$("#inputSummaryEdit").val(sessionSummary)
-	$("#inputTriggeringQuestionEdit").val(triggeringQuestion)
+	$("#inputTriggeringQuestionEdit").val(sessionTriggeringQuestion)
 	$("#inputCreationDateEdit").val(sessionCreationDate)
 
 	$("#inputSessionNameEdit").attr('disabled', true);
 	$("#inputSummaryEdit").attr('disabled', true);
+	$("#inputTriggeringQuestionEdit").attr('disabled', true)
 	$("#inputCreationDateEdit").attr('disabled', true);
 
 	checkEditFieldSessionErrors(
