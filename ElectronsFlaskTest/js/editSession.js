@@ -55,6 +55,7 @@ function getProjectSessions(projectID){
 				var sessions = response['Sessions']
 				keys = Object.keys(sessions)
 				console.log(localStorage.getItem("SessionId"))
+
 				// Dropdown should be available if there's at least another session created
 				if (keys.length > 1){
 					$("#copy_participants").attr('disabled', false)
@@ -101,7 +102,8 @@ $("#copy_participants").click(function(e){
 		},
 		success : function (response) {
 			if (response['Success']){
-				window.location.replace("sessionInfo.html")
+				$("#sessionParticipants").html("")
+				getSessionParticipants(sessionID)
 			}
 		},
 		error : function (error) {
