@@ -13,7 +13,6 @@ function getProjectSessions(projectID){
 	  },
 	  success : function(response){
 	  	if (response['Success']){
-	  		console.log(response)
 	  		var sessions = response['Sessions']
 	  		keys = Object.keys(sessions)
 	  		if (keys.length > 0){
@@ -29,10 +28,9 @@ function getProjectSessions(projectID){
 	  			})
 	  		}
 	  		else{
-	  			$("#projectSessions").append('<h3>You haven\'t created any projects yet.</h3>')
+				$("#projectSessions").append('<h3>You haven\'t created any sessions yet.</h3>')
 	  		}
 	  	}
-	  	console.log(response)
 	  },
 	  error : function(error){
 	    console.log("Error: " + error);
@@ -70,7 +68,6 @@ $("#create_session").click(function(e){
     var name  = $("#inputSessionName").val()
     var summary = $("#inputSummary").val()
     var triggeringQuestion = $("#inputTriggeringQuestion").val()
-    console.log(summary)
     var date;
     date = new Date();
     date = date.getUTCFullYear() + '-' +
@@ -104,7 +101,6 @@ function createSession (name,summary, triggeringQuestion, date){
 		        if (response['Success']){
 		             window.location.replace("session.html")
 		        }
-		        console.log(response)
 		    },
 		    error : function (error) {
 		        console.log("Error: " + error);
