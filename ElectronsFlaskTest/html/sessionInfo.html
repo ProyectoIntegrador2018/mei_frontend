@@ -48,7 +48,9 @@
 						<label class="sr-only">Email</label>
 						<input type="text" id="inputParticipantEmail" class="form-control mt-2 shadow-sm" placeholder="Email" required>
 						<label class="sr-only">Role</label>
-						<input type="text" id="inputParticipantRole" class="form-control mt-2 shadow-sm" placeholder="Role" required>
+						<select class="form-control mt-2 shadow-sm" id="inputParticipantRole">
+							<option value="" selected disabled hidden>Role</option>
+						</select>
 						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="create_participant">Add</button>
 						<ul id="participantErrorMessage" class="mt-2 text-left">
 						</ul>

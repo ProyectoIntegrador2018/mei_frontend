@@ -85,6 +85,7 @@ function getProjectSessions(projectID){
 
 $(document).ready(function(){
 	getSessionInformation()
+	getParticipantTypes()
 	getSessionParticipants(sessionID)
 	getProjectSessions(localStorage.getItem("id"))
 })
@@ -204,6 +205,26 @@ function getSessionInformation(){
 	});
 }
 
+function getParticipantTypes(){
+	$.ajax({
+		url : "http://127.0.0.1:5000/get_participant_types",
+		type : "POST",
+		success : function (response) {
+			if (response['Success']){
+				var options = ""
+				response['Roles'].forEach(function (role){
+					options += `<option value="${role['name']}">${role['name']}</option>`
+				})
+
+				$("#inputParticipantRole").append(options)
+			}
+		},
+		error : function (error) {
+			console.log("Error: " + error);
+		}
+	});
+}
+
 function getSessionParticipants(sessionID){
 	$.ajax({
 		url : "http://127.0.0.1:5000/get_session_participants",
@@ -243,7 +264,7 @@ $("#create_participant").click(function(e){
 })
 
 function createParticipant (name,email, role){
-	if (name == "" || email == "" || role == ""){
+	if (name == "" || email == "" || role == "" || role == null){
 		$("#participantErrorMessage").html("<li>Please complete all the fields</li>")
 	}
 	else{
