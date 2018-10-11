@@ -58,6 +58,11 @@ function getSessionInfo(id) {
 	window.location.replace("sessionInfo.html")
 }
 
+function startSession(id){
+	localStorage.setItem("SessionId", id)
+	window.location.replace("sessionIdeas.html")
+}
+
 $("#back").click(function(e) {
 	e.preventDefault()
 	window.location.replace("projects.html")
