@@ -185,6 +185,36 @@ $("#saveIdeas").click(function() {
   })
 })
 
+function getTriggering(){
+  $.ajax({
+    url : "http://127.0.0.1:5000/get_session_data",
+    type : "POST",
+    data : {
+      sessionID : localStorage.getItem("SessionId")
+    },
+    success : function (response) { 
+      if (response['Success']){
+        var sessionCard = getSessionCard(localStorage.getItem("SessionId"), response['triggeringQuestion'])
+        $("#projectSessions").append(sessionCard)
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
+}
+
+function getSessionCard(id,triggeringQuestion){
+  var sessionCard = `
+    <div class="card mt-2 mb-2">
+      <div class="card-body shadow-sm">
+        <h5 class="card-text">${triggeringQuestion}</h5>
+        <button class="btnadd float-right"><i class="fa fa-plus"></i></button>
+      </div>
+    </div>`
+  return sessionCard
+}
+
 function getIdeaHierarchy(){
   var ideasCards = $(".idea")
   var ideas = {}
