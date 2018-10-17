@@ -36,14 +36,14 @@
 		</nav>
 		<div class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll">
 			<div class="row">
-				<div class="col-9" id="ideasSection"></div>
+				<div class="col-9" id="ideasSectionVoting"></div>
 				<div class="col-3">
           <form class="form-signin">
             <h3>Select Participant: </h3>
             <select class="form-control mt-2 shadow-sm" id="inputParticipantNameVoting">
               <option value="" selected disabled hidden>Participant</option>
             </select>
-            <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="add_vote">Add</button>
+            <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_vote">Save votes</button>
           </form>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>
-		<script src="../js/sessionIdeas.js"></script>
+		<script src="../js/sessionVoting.js"></script>
 		<script>if (window.module) module = window.module;</script>
 	</body>
 </html>
