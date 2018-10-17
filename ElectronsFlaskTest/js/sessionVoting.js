@@ -117,25 +117,28 @@ $("#save_vote").click(function(e){
   var votes = getCurrentVotes()
   var member = $("#inputParticipantNameVoting").val()
   var sessionID = localStorage.getItem("SessionId")
-  var ideasIDs = localStorage.getItem("ideasIDs")
+  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
 
   console.log(votes)
   console.log(ideasIDs)
   console.log(member)
   console.log(sessionID)
 
-  $.ajax({
-	    url : "http://127.0.0.1:5000/save_vote",
-	    type : "POST",
-	    data : {votes : votes,
-	            ideasIDs: ideasIDs,
-              member: member,
-              sessionID: sessionID},
-	    success : function (response) {
-	        console.log(response)
-	    },
-	    error : function (error) {
-	        console.log("Error: " + error);
-	    }
-	});
+  for(i=0; i<votes.length; i++){
+    $.ajax({
+        url : "http://127.0.0.1:5000/save_vote",
+        type : "POST",
+        data : {vote : votes[i],
+                ideaID: ideasIDs[i],
+                member: member,
+                sessionID: sessionID},
+        success : function (response) {
+            console.log(response)
+        },
+        error : function (error) {
+            console.log("Error: " + error);
+        }
+    });
+  }
+
 })
