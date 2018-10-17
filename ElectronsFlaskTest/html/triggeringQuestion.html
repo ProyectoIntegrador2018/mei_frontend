@@ -14,13 +14,13 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	</head>
 	<body>
-		<nav class="navbar">
+		<nav class="navbar navbar-dark bg-primary">
 			<ul class="nav fixed-top nav-tabs">
 			  <li class="nav-item">
 			    <a class="nav-link" href="session.html">Back</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="404.html">Triggering question</a>
+			    <a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
 			  </li>
 			  <li class="nav-item">
 			    <a class="nav-link" href="404.html">Element type</a>
@@ -33,7 +33,10 @@
 			  </li>
 			</ul>
 		</nav>
-		<div class="container-fluid" id="projectSessions"></div>
+		<div class=" mt-auto container-fluid col-sm-12">
+			<div class="container-fluid" id="projectSessions"></div>
+			<div class="row justify-content-center p-3" id="ideaSessions"></div>
+		</div>
 		<!-- Modal INPUT IDEA-->
 		<div class="modal fade" id="addIdea" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -54,15 +57,16 @@
    					<label for="clarification">Clarification</label>
     				<textarea class="form-control" id="clarification" rows="3"></textarea>
   				  </div>
-				  <div class="form-group form-check">
-				    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-				    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  				  <div class="form-group">
+				    <label for="exampleFormControlSelect1">Select participant</label>
+				    <select class="form-control" id="participantSelection">
+				    </select>
 				  </div>
 				</form>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="submit" class="btn btn-primary">Add Next</button>
+		        <button id="addIdeabtn" type="submit" class="btn btn-primary">Add Next</button>
 		      </div>
 		    </div>
 		  </div>
@@ -93,7 +97,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button id="elementType" type="submit" class="btn btn-primary">Add</button>
+		        <button id="addElementTypeBtn" type="submit" class="btn btn-primary" data-dismiss="modal">Add</button>
 		      </div>
 		    </div>
 		  </div>
