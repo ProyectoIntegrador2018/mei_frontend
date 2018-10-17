@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
   getIdeasVoting()
   getSessionParticipantsVoting(localStorage.getItem("SessionId"))
@@ -13,9 +15,11 @@ function getIdeasVoting(){
     success : function (response) {
       if (response['Success']) {
         var i = 1
+        IDEAS_NUMBER = response['Ideas'][1].length
+        options = setupPriorities(IDEAS_NUMBER)
         response['Ideas'][1].forEach(function (idea){
           var ideaText = idea[2]
-          addIdeaCardVoting(i,ideaText,"")
+          addIdeaCardVoting(i,ideaText,options)
           i++
         })
       }
@@ -39,7 +43,9 @@ function getSessionParticipantsVoting(sessionID){
 				response['Members'].forEach(function (member){
           options += `<option value="${member['email']}">${member['name']}</option>`
         })
+        console.log(options)
         $("#inputParticipantNameVoting").append(options)
+        console.log($("#inputParticipantNameVoting"))
       }
 		},
 		error : function(error){
@@ -63,6 +69,7 @@ function addIdeaCardVoting(id,statement,priority){
           <div class="col-3">
             <select class="form-control mt-2 shadow-sm" id="inputIdeaVoting${id}">
               <option value="" selected disabled hidden>Priority</option>
+              ${priority}
             </select>
           </div>
         </div>
@@ -70,4 +77,22 @@ function addIdeaCardVoting(id,statement,priority){
     </div>
     </div>`
   $("#ideasSectionVoting").append(ideaCard)
+}
+
+function setupPriorities(IDEAS_NUMBER){
+  var options = ""
+  for(i=1; i<=IDEAS_NUMBER; i++){
+      options += `<option value="${i}">${i}</option>`
+  }
+  console.log(options);
+
+  // var inputs = $('[id^=inputIdeaVoting]')
+  // inputs.forEach(function (input){
+  //   input.append(options)
+  // })
+  // console.log(inputs)
+  // for (i = 1; i <= IDEAS_NUMBER; i++){
+  //   $("#inputIdeaVoting"+i).append(options)
+  // }
+  return options
 }
