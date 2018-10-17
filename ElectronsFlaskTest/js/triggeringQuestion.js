@@ -71,6 +71,8 @@ function addParticipants(){
       if (response['Success']){
         console.log( response.Members.length)
         var option = document.createElement("option");
+        $("#participantSelection").append("")
+
         for(member in response.Members) {
           option.text = response.Members[member].email;
           option.value = response.Members[member].email;
@@ -133,6 +135,9 @@ $("#addIdeabtn").click(function() {
         if (response['Success']){
           var ideaCard = getIdeaCard(localStorage.getItem("SessionId"),statement, clarification, participant)
           $("#ideaSessions").append(ideaCard)
+          $("#statement").val("")
+          $("#clarification").val("") 
+          $("#participantSelection").val("")
         }
       },
       error : function (error) {

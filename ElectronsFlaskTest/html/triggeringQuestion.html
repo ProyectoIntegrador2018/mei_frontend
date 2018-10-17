@@ -14,26 +14,20 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	</head>
 	<body>
-		<nav class="navbar navbar-dark bg-primary">
-			<ul class="nav fixed-top nav-tabs">
-			  <li class="nav-item">
-			    <a class="nav-link" href="session.html">Back</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="404.html">Element type</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="404.html">Element generation</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="sessionIdeas.html">Element compression</a>
-			  </li>
-			</ul>
-		</nav>
 		<div class=" mt-auto container-fluid col-sm-12">
+			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	   			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				  <li class="nav-item active">
+				    <a class="nav-link" href="session.html">Back</a>
+				  </li>
+				  <li class="nav-item active">
+				    <a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
+				  </li>
+				  <li class="nav-item active">
+				    <a class="nav-link" href="sessionIdeas.html">Element compression</a>
+				  </li>
+				</ul>
+  			</nav>
 			<div class="container-fluid" id="projectSessions"></div>
 			<div class="row justify-content-center p-3" id="ideaSessions"></div>
 		</div>
@@ -60,6 +54,7 @@
   				  <div class="form-group">
 				    <label for="exampleFormControlSelect1">Select participant</label>
 				    <select class="form-control" id="participantSelection">
+				    	<option value="1"></option>
 				    </select>
 				  </div>
 				</form>
@@ -84,6 +79,7 @@
 		      <div class="modal-body">
 		      	<div class="form-group">
 				    <select class="form-control" id="elementSelection">
+				      <option value="1"></option>
 				      <option>Problem</option>
 				      <option>Objective</option>
 				      <option>Solution</option>
