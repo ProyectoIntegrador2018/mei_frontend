@@ -32,6 +32,7 @@ function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, childre
 }
 
 $(document).ready(function(){
+  console.log("hello")
   $.ajax({
     url : "http://127.0.0.1:5000/get_session_ideas",
     type : "POST",

@@ -71,9 +71,8 @@ function addParticipants(){
       if (response['Success']){
         console.log( response.Members.length)
         var option = document.createElement("option");
-        $("#participantSelection").append("")
-
         for(member in response.Members) {
+          var option = document.createElement("option");
           option.text = response.Members[member].email;
           option.value = response.Members[member].email;
           $("#participantSelection").append(option)
@@ -154,7 +153,11 @@ $("#addElementTypeBtn").click(function() {
       IDEA_TYPE = $("#elementSelection").value
       $("#trigQuestion").append( '<span class="badge badge-primary">' + IDEA_TYPE + '</span>')
       $( "#otherOption").hide()
-  }});
+      $("#addTag").prop('disabled', true);
+      console.log("hello")
+    }
+
+});
 
 $( "#elementSelection" ).change(function() {
   if(this.value == "Other") {
