@@ -16,12 +16,17 @@ function getIdeasVoting(){
       if (response['Success']) {
         var i = 1
         IDEAS_NUMBER = response['Ideas'][1].length
+        localStorage.setItem("ideasNum",IDEAS_NUMBER)
+        IDEAS_IDS = []
         options = setupPriorities(IDEAS_NUMBER)
         response['Ideas'][1].forEach(function (idea){
           var ideaText = idea[2]
+          IDEAS_IDS.push(idea[0])
           addIdeaCardVoting(i,ideaText,options)
           i++
         })
+
+        localStorage.setItem("ideasIDs",IDEAS_IDS)
       }
     },
     error : function (error) {
@@ -96,3 +101,41 @@ function setupPriorities(IDEAS_NUMBER){
   // }
   return options
 }
+
+function getCurrentVotes(){
+  votes = []
+  IDEAS_NUMBER = localStorage.getItem("ideasNum")
+
+  for(i=1; i<=IDEAS_NUMBER; i++){
+      votes.push( $("#inputIdeaVoting"+i).val() )
+  }
+  return votes
+}
+
+$("#save_vote").click(function(e){
+  e.preventDefault()
+  var votes = getCurrentVotes()
+  var member = $("#inputParticipantNameVoting").val()
+  var sessionID = localStorage.getItem("SessionId")
+  var ideasIDs = localStorage.getItem("ideasIDs")
+
+  console.log(votes)
+  console.log(ideasIDs)
+  console.log(member)
+  console.log(sessionID)
+
+  $.ajax({
+	    url : "http://127.0.0.1:5000/save_vote",
+	    type : "POST",
+	    data : {votes : votes,
+	            ideasIDs: ideasIDs,
+              member: member,
+              sessionID: sessionID},
+	    success : function (response) {
+	        console.log(response)
+	    },
+	    error : function (error) {
+	        console.log("Error: " + error);
+	    }
+	});
+})
