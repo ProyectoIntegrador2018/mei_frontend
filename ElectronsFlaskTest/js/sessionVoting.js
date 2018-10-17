@@ -3,6 +3,7 @@
 $(document).ready(function(){
   getIdeasVoting()
   getSessionParticipantsVoting(localStorage.getItem("SessionId"))
+  getIdeasVotingResults(localStorage.getItem("SessionId"))
 })
 
 function getIdeasVoting(){
@@ -27,6 +28,27 @@ function getIdeasVoting(){
         })
 
         localStorage.setItem("ideasIDs",IDEAS_IDS)
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
+}
+
+function getIdeasVotingResults(){
+  $.ajax({
+    url : "http://127.0.0.1:5000/get_voting_results",
+    type : "POST",
+    data : {
+      sessionID : localStorage.getItem("SessionId")
+    },
+    success : function (response) {
+      if (response['Success']) {
+        response['votes'].forEach(function (result){
+          console.log(result)
+          addIdeaCardVotingResult(result[0],result[1])
+        })
       }
     },
     error : function (error) {
@@ -84,6 +106,25 @@ function addIdeaCardVoting(id,statement,priority){
   $("#ideasSectionVoting").append(ideaCard)
 }
 
+function addIdeaCardVotingResult(id,priority){
+  var ideaCard = `
+    <div class="col-sm-4">
+    <div id="ideaCardVoting" class="card" style="width: 36rem;"">
+      <div class="card-body shadow-sm">
+        <div class="row">
+          <div class="col-2">
+            <h4 class="card-text">${id}</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="card-text">${priority}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>`
+  $("#ideasSectionResults").append(ideaCard)
+}
+
 function setupPriorities(IDEAS_NUMBER){
   var options = ""
   for(i=1; i<=IDEAS_NUMBER; i++){
@@ -113,7 +154,6 @@ function getCurrentVotes(){
 }
 
 $("#save_vote").click(function(e){
-  e.preventDefault()
   var votes = getCurrentVotes()
   var member = $("#inputParticipantNameVoting").val()
   var sessionID = localStorage.getItem("SessionId")
