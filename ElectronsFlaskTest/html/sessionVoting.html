@@ -27,10 +27,10 @@
 			    <a class="nav-link" href="404.html">Element generation</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link active" href="sessionIdeas.html">Element compression</a>
+			    <a class="nav-link" href="sessionIdeas.html">Element compression</a>
 			  </li>
 				<li class="nav-item">
-			    <a class="nav-link" href="sessionVoting.html">Voting</a>
+			    <a class="nav-link active" href="sessionVoting.html">Voting</a>
 			  </li>
 			</ul>
 		</nav>
@@ -38,9 +38,13 @@
 			<div class="row">
 				<div class="col-9" id="ideasSection"></div>
 				<div class="col-3">
-					<button type="button" class="btn btn-secondary btn-lg btn-block mt-4" id="showParticipants">Show participants</button>
-					<button type="button" class="btn btn-secondary btn-lg btn-block mt-4" id="showClarifications">Show clarifications</button>
-					<button type="button" class="btn btn-primary btn-lg btn-block mt-4" id="saveIdeas">Save idea compression</button>
+          <form class="form-signin">
+            <h3>Select Participant: </h3>
+            <select class="form-control mt-2 shadow-sm" id="inputParticipantNameVoting">
+              <option value="" selected disabled hidden>Participant</option>
+            </select>
+            <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="add_vote">Add</button>
+          </form>
 				</div>
 			</div>
 		</div>
