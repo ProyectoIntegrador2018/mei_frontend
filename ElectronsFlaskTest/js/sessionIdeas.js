@@ -1,5 +1,9 @@
 const interact = require('interactjs');
 
+// Hold clarifications before editing for when the user clicks Cancel and we can revert the TextArea value
+// to the clarification before editing
+var ideaClarificationDict = {}
+
 function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, children){
   var display = "";
   if (isChildren){
@@ -27,10 +31,11 @@ function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, childre
                   <div class="form-group elementClarification" style="Display: none">
                     <div style="Display: inline">
                     <label for="comment">Clarification:</label>
-                    <button type="button" class="btn btn-primary btn-sm editClarification" id="edit-${ideaID}">Edit</button>
-                    <button type="button" class="btn btn-primary btn-sm editClarification" id="save-${ideaID}">Save</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="editClarification(${ideaID})" style="Display: inline" id="edit-${ideaID}">Edit</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="cancelEditClarification(${ideaID})"style="Display: none" id="cancel-${ideaID}">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="saveClarification(${ideaID})"style="Display: none" id="save-${ideaID}">Save</button>
                     </div>
-                    <textarea class="form-control" placeholder="No clarification" id="clarification-${ideaID}">${clarification}</textarea>
+                    <textarea class="form-control" placeholder="No clarification" id="clarification-${ideaID}" disabled>${clarification}</textarea>
                   </div>
                   ${children}
               </div>
@@ -38,8 +43,51 @@ function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, childre
           </div>`
 }
 
+function editClarification(ideaID){
+  // Show/hide the appropriate buttons and enable the Clarification TextArea
+  $("#edit-" + ideaID).css("display", "none")
+  $("#cancel-" + ideaID).css("display", "inline")
+  $("#save-" + ideaID).css("display", "inline")
+  $("#clarification-" + ideaID).prop("disabled", false)
+
+  // Keep track of the clarification before editing, Cancel should restore the TextArea value to this
+  ideaClarificationDict[ideaID] = $("#clarification-" + ideaID).val()
+}
+
+function cancelEditClarification(ideaID){
+  // Show/hide the appropriate buttons and disable the Clarification TextArea
+  $("#edit-" + ideaID).css("display", "inline")
+  $("#cancel-" + ideaID).css("display", "none")
+  $("#save-" + ideaID).css("display", "none")
+  $("#clarification-" + ideaID).prop("disabled", true)
+
+  // Set the Clarification TextArea value to the clarification before editing
+  $("#clarification-" + ideaID).val(ideaClarificationDict[ideaID])
+}
+
+function saveClarification(ideaID){
+  // Show/hide the appropriate buttons and disable the Clarification TextArea
+  $("#edit-" + ideaID).css("display", "inline")
+  $("#cancel-" + ideaID).css("display", "none")
+  $("#save-" + ideaID).css("display", "none")
+  $("#clarification-" + ideaID).prop("disabled", true)
+  var clarification = $("#clarification-" + ideaID).val()
+  if (clarification !== ""){ // Check for only whitespaces????
+    $.ajax({
+      url : "http://127.0.0.01:5000/update_clarification",
+      type : "POST",
+      data : {
+        ideaID : ideaID,
+        clarification : clarification
+      },
+      error : function(error){
+        console.log("Error: " + error)
+      }
+    })
+  }
+}
+
 $(document).ready(function(){
-  console.log("hello")
   $.ajax({
     url : "http://127.0.0.1:5000/get_session_ideas",
     type : "POST",
@@ -140,7 +188,7 @@ interact('.dropzone').dropzone({
 
     draggableElement.classList.remove('dropzone')
     draggableElement.classList.remove('draggable')
-    $(draggableElement).find("button").css("display", "inline")
+    $(draggableElement).find("button .close").css("display", "inline")
     $(draggableElement).css('z-index', $(dropzoneElement).css('z-index'));
     $($(dropzoneElement).children()[0].children[0]).append(draggableElement)
     $($(dropzoneElement).children()[0].children[0]).append(childrenIdeas)
@@ -160,7 +208,6 @@ $("#showParticipants").click(function() {
 })
 
 $("#showClarifications").click(function() {
-  console.log("Click!!!")
   var display = $(".elementClarification").css("Display")
   if (display === "none"){
     $("#showClarifications").text("Hide clarifications")
