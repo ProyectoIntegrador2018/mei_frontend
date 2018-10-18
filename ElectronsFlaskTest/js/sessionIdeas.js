@@ -23,8 +23,15 @@ function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, childre
                   <h5 class="card-title">
                     ${ideaText}
                   </h5>
-                  <h6 style="Display: none" class="elementClarification">Clarification: ${clarification}</h6>
                   <h6 style="Display: none" class="elementParticipant">Author: ${email}</h6>
+                  <div class="form-group elementClarification" style="Display: none">
+                    <div style="Display: inline">
+                    <label for="comment">Clarification:</label>
+                    <button type="button" class="btn btn-primary btn-sm editClarification" id="edit-${ideaID}">Edit</button>
+                    <button type="button" class="btn btn-primary btn-sm editClarification" id="save-${ideaID}">Save</button>
+                    </div>
+                    <textarea class="form-control" placeholder="No clarification" id="clarification-${ideaID}">${clarification}</textarea>
+                  </div>
                   ${children}
               </div>
             </div>
@@ -52,15 +59,15 @@ $(document).ready(function(){
               for(j = 1; j < ideas[keys[i]].length; j++){
                 var childID = ideas[keys[i]][j][0]
                 var childIdeaText = ideas[keys[i]][j][2]
-                var childClarification = (ideas[keys[i]][j][3] == null) ? 'No clarification' : ideas[keys[i]][j][3]
+                var childClarification = (ideas[keys[i]][j][3] == null) ? '' : ideas[keys[i]][j][3]
                 var childParticipantEmail = (ideas[keys[i]][j][4] == null) ? 'Anonymous' : ideas[keys[i]][j][4]
                 var childIdea = getIdeaCard(childID, childIdeaText, childParticipantEmail, childClarification, true, "")
                 childIdeas += childIdea
               }
 
-              var parentID = ideas[keys[i]][0]
+              var parentID = ideas[keys[i]][0][0]
               var parentIdeaText = ideas[keys[i]][0][2]
-              var parentClarification = (ideas[keys[i]][0][3] == null) ? 'No clarification' : ideas[keys[i]][0][3]
+              var parentClarification = (ideas[keys[i]][0][3] == null) ? '' : ideas[keys[i]][0][3]
               var participantEmail = (ideas[keys[i]][0][4] == null) ? 'Anonymous' : ideas[keys[i]][0][4]
               var parentIdea = getIdeaCard(parentID, parentIdeaText, participantEmail, parentClarification, false, childIdeas)
               $("#ideasSection").append(parentIdea)
@@ -204,7 +211,6 @@ function getIdeaHierarchy(){
 }
 
 function removeChildIdea(id){
-  console.log("Clicking!!!!")
     $("#ideasSection").append($("#" + id))
     $("#" + id).find("button").css("display", "none")
     $("#" + id).addClass('draggable')
