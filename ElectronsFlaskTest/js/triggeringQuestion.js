@@ -42,12 +42,12 @@ function getIdeas(){
         if (keys.length > 0){
           for(i = 0; i < keys.length; i++){
             for(j = 0; j < ideas[keys[i]].length; j++){
+              IDEA_TYPE = ideas[keys[i]][j][5]
               var childID = ideas[keys[i]][j][0]
               var childIdeaText = ideas[keys[i]][j][2]
               var childClarification = (ideas[keys[i]][j][3] == null) ? 'No clarification' : ideas[keys[i]][j][3]
-              IDEA_TYPE = ideas[keys[i]][j][5]
               var childParticipantEmail = (ideas[keys[i]][j][4] == null) ? 'Anonymous' : ideas[keys[i]][j][4]
-              var childIdea = getIdeaCard(childID,childIdeaText, childClarification, childParticipantEmail)
+              var childIdea = getIdeaTableRow(childID, childIdeaText, childClarification, childParticipantEmail)
               $("#ideaSessions").append(childIdea)
             }
           }
@@ -90,7 +90,7 @@ function getSessionCard(id,triggeringQuestion){
     <div id="trigQuestion" class="card mt-2 mb-2">
       <div class="card-header">Triggering Question</div>
       <div class="card-body shadow-sm">
-        <h1 class="card-text">${triggeringQuestion}</h1>
+        <h1 class="card-text text-center">${triggeringQuestion}</h1>
         <button id="trigAdd" class="btnadd float-right" data-toggle="modal" data-target="#addIdea"><i class="fa fa-plus"></i></button>
         <button id="trigTags" class="btnadd float-right" data-toggle="modal" data-target="#addTag"><i class="fa fa-tags"></i></button>
         <button id="trigEdit" class="btnadd float-right"><i class="fas fa-edit"></i></button>
@@ -114,35 +114,60 @@ function getIdeaCard(id,statement, clarification, participant){
   return ideaCard
 }
 
+function getIdeaTableRow(id, statement, clarification, participant){
+  var clarificationWarning = ""
+  if (clarification == "No clarification"){
+    clarificationWarning = `class="table-warning"`
+  }
+
+  if (participant == null || participant == ""){
+    participant = "Anonymous"
+  }
+
+  var ideaRow = `
+    <tr>
+      <th scope="row">${id}</th>
+      <td align="center"><span class="badge badge-secondary">${IDEA_TYPE}</span></td>
+      <td>${statement}</td>
+      <td ${clarificationWarning}>${clarification}</td>
+      <td>${participant}</td>
+    </tr>
+  `
+
+  return ideaRow
+}
+
 $("#addIdeabtn").click(function() {
   var statement =  $("#statement").val();
-  var clarification = $("#clarification").val();
   var participant = $("#participantSelection").val();
+  if (participant === ""){
+    participant = null
+  }
 
   if(IDEA_TYPE != "") {
-    $.ajax({
-      url : "http://127.0.0.1:5000/create_element",
-      type : "POST",
-      data : {
-        idea : statement,
-        clarification : clarification,
-        ideaType : IDEA_TYPE,
-        participant : participant,
-        sessionID : localStorage.getItem("SessionId")
-      },
-      success : function (response) {
-        if (response['Success']){
-          var ideaCard = getIdeaCard(localStorage.getItem("SessionId"),statement, clarification, participant)
-          $("#ideaSessions").append(ideaCard)
-          $("#statement").val("")
-          $("#clarification").val("") 
-          $("#participantSelection").val("")
+    if (statement != ""){
+      $.ajax({
+        url : "http://127.0.0.1:5000/create_element",
+        type : "POST",
+        data : {
+          idea : statement,
+          ideaType : IDEA_TYPE,
+          participant : participant,
+          sessionID : localStorage.getItem("SessionId")
+        },
+        success : function (response) {
+          if (response['Success']){
+            var ideaRow = getIdeaTableRow(response['ideaID'], statement, "No clarification", participant)
+            $("#ideaSessions").append(ideaRow)
+            $("#statement").val("")
+            $("#participantSelection").val("")
+          }
+        },
+        error : function (error) {
+          console.log("Error: " + error);
         }
-      },
-      error : function (error) {
-        console.log("Error: " + error);
-      }
-    })
+      })
+    }
   } else {
     alert("There is no element type for the session")
   }
