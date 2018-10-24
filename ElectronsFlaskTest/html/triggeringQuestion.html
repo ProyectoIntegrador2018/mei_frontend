@@ -14,35 +14,42 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	</head>
 	<body>
-		<div class="fixed-top container col-sm-12">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-					<li class="nav-item active">
-						<a class="nav-link" href="session.html">Back</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="sessionIdeas.html">Element compression</a>
-					</li>
-				</ul>
-			</nav>
-			<div class="container-fluid" id="projectSessions"></div>
-			<div class="row justify-content-center p-3">
-				<table class="table table-striped">
-					<thead>
-						<tr class="bg-primary text-white">
-							<th scope="col">#</th>
-							<th scope="col">Element type</th>
-							<th scope="col">Statement</th>
-							<th scope="col">Clarification</th>
-							<th scope="col">Author</th>
-						</tr>
-					</thead>
-					<tbody id="ideaSessions">
-					</tbody>
-				</table>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				<li class="nav-item active">
+					<a class="nav-link" href="session.html">Back</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="sessionIdeas.html">Element compression</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div id="projectSessions" style="height: 40%">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" style="overflow-y: auto;">
+					<table class="table table-striped" style="display: block; height: 60vh">
+						<thead>
+							<tr class="bg-primary text-white">
+								<th scope="col">#</th>
+								<th scope="col">Element type</th>
+								<th scope="col">Statement</th>
+								<th scope="col">Clarification</th>
+								<th scope="col">Author</th>
+							</tr>
+						</thead>
+						<tbody id="ideaSessions">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<!-- Modal INPUT IDEA-->

@@ -87,7 +87,7 @@ function addParticipants(){
 
 function getSessionCard(id,triggeringQuestion){
   var sessionCard = `
-    <div id="trigQuestion" class="card mt-2 mb-2">
+    <div id="trigQuestion" class="card mb-2">
       <div class="card-header">Triggering Question</div>
       <div class="card-body shadow-sm">
         <h1 class="card-text text-center">${triggeringQuestion}</h1>
