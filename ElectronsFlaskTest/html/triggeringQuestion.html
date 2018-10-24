@@ -14,89 +14,106 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 	</head>
 	<body>
-		<div class="fixed-top container-fluid col-sm-12">
-			<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	   			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-				  <li class="nav-item active">
-				    <a class="nav-link" href="session.html">Back</a>
-				  </li>
-				  <li class="nav-item active">
-				    <a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
-				  </li>
-				  <li class="nav-item active">
-				    <a class="nav-link" href="sessionIdeas.html">Element compression</a>
-				  </li>
-				</ul>
-  			</nav>
-			<div class="container-fluid" id="projectSessions"></div>
-			<div class="row justify-content-center p-3" id="ideaSessions"></div>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+				<li class="nav-item active">
+					<a class="nav-link" href="session.html">Back</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="triggeringQuestion.html">Triggering question</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="sessionIdeas.html">Element compression</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div id="projectSessions" style="height: 40%">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" style="overflow-y: auto;">
+					<table class="table table-striped" style="display: block; height: 60vh">
+						<thead>
+							<tr class="bg-primary text-white">
+								<th scope="col">#</th>
+								<th scope="col">Element type</th>
+								<th scope="col">Statement</th>
+								<th scope="col">Clarification</th>
+								<th scope="col">Author</th>
+							</tr>
+						</thead>
+						<tbody id="ideaSessions">
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 		<!-- Modal INPUT IDEA-->
 		<div class="modal fade" id="addIdea" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">Add Element</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		      	<form>
-				  <div class="form-group">
-   					<label for="statement">Statement</label>
-    				<textarea class="form-control" id="statement" rows="4"></textarea>
-  				  </div>
-				  <div class="form-group">
-   					<label for="clarification">Clarification</label>
-    				<textarea class="form-control" id="clarification" rows="3"></textarea>
-  				  </div>
-  				  <div class="form-group">
-				    <label for="exampleFormControlSelect1">Select participant</label>
-				    <select class="form-control" id="participantSelection">
-				    	<option value="1"></option>
-				    </select>
-				  </div>
-				</form>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button id="addIdeabtn" type="submit" class="btn btn-primary">Add Next</button>
-		      </div>
-		    </div>
-		  </div>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Add Element</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group">
+								<label for="statement">Statement</label>
+								<textarea style="resize: none;" class="form-control" id="statement" rows="4"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect1">Select participant</label>
+								<select class="form-control" id="participantSelection">
+									<option value="">Anonymous</option>
+								</select>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button id="addIdeabtn" type="submit" class="btn btn-primary">Add Next</button>
+					</div>
+				</div>
+			</div>
 		</div>
 		<!-- Modal ELEMENT TYPE-->
 		<div class="modal fade" id="addTag" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog modal-dialog-centered" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">Set Type for Elements</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		      	<div class="form-group">
-				    <select class="form-control" id="elementSelection">
-				      <option value="1"></option>
-				      <option>Problem</option>
-				      <option>Objective</option>
-				      <option>Solution</option>
-				      <option>Action</option>
-				      <option>Feature</option>
-				      <option>Example</option>
-				      <option>Other</option>
-				    </select>
-				    <input type="text" class="form-control" id="otherOption" style='display:none;'>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Set Type for Elements</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<select class="form-control" id="elementSelection">
+								<option value="1"></option>
+								<option>Problem</option>
+								<option>Objective</option>
+								<option>Solution</option>
+								<option>Action</option>
+								<option>Feature</option>
+								<option>Example</option>
+								<option>Other</option>
+							</select>
+							<input type="text" class="form-control" id="otherOption" style='display:none;'>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button id="addElementTypeBtn" type="submit" class="btn btn-primary" data-dismiss="modal">Add</button>
+					</div>
 				</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button id="addElementTypeBtn" type="submit" class="btn btn-primary" data-dismiss="modal">Add</button>
-		      </div>
-		    </div>
-		  </div>
+			</div>
 		</div>
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
