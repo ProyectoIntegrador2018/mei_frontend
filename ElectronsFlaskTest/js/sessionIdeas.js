@@ -4,7 +4,7 @@ const interact = require('interactjs');
 // to the clarification before editing
 var ideaClarificationDict = {}
 
-function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, children){
+function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, children, ideaNumber){
   var display = "";
   if (isChildren){
     display = "inline"
@@ -25,7 +25,7 @@ function getIdeaCard(ideaID, ideaText, email, clarification, isChildren, childre
                     &times;
                   </button>
                   <h5 class="card-title">
-                    ${ideaText}
+                    <b>${ideaNumber}</b> ${ideaText}
                   </h5>
                   <h6 style="Display: none" class="elementParticipant">Author: ${email}</h6>
                   <div class="form-group elementClarification" style="Display: none">
@@ -110,7 +110,8 @@ $(document).ready(function(){
                 var childIdeaText = ideas[keys[i]][j][2]
                 var childClarification = (ideas[keys[i]][j][3] == null) ? '' : ideas[keys[i]][j][3]
                 var childParticipantEmail = (ideas[keys[i]][j][4] == null) ? 'Anonymous' : ideas[keys[i]][j][4]
-                var childIdea = getIdeaCard(childID, childIdeaText, childParticipantEmail, childClarification, true, "")
+                var childIdeaNumber = ideas[keys[i]][j][7]
+                var childIdea = getIdeaCard(childID, childIdeaText, childParticipantEmail, childClarification, true, "", childIdeaNumber)
                 childIdeas += childIdea
               }
 
@@ -118,7 +119,8 @@ $(document).ready(function(){
               var parentIdeaText = ideas[keys[i]][0][2]
               var parentClarification = (ideas[keys[i]][0][3] == null) ? '' : ideas[keys[i]][0][3]
               var participantEmail = (ideas[keys[i]][0][4] == null) ? 'Anonymous' : ideas[keys[i]][0][4]
-              var parentIdea = getIdeaCard(parentID, parentIdeaText, participantEmail, parentClarification, false, childIdeas)
+              var parentNumber = ideas[keys[i]][0][7]
+              var parentIdea = getIdeaCard(parentID, parentIdeaText, participantEmail, parentClarification, false, childIdeas, parentNumber)
               $("#ideasSection").append(parentIdea)
             }
           }

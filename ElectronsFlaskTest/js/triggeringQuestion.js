@@ -29,28 +29,25 @@ function getTriggering(){
 
 function getIdeas(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_session_ideas",
+    url : "http://127.0.0.1:5000/get_all_session_ideas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
     },
     success : function (response) { 
+      console.log(response)
       if (response['Success']) {
         var i = 0
         var ideas = response['Ideas']
-        var keys = Object.keys(ideas)
-        if (keys.length > 0){
-          for(i = 0; i < keys.length; i++){
-            for(j = 0; j < ideas[keys[i]].length; j++){
-              IDEA_TYPE = ideas[keys[i]][j][5]
-              var childID = ideas[keys[i]][j][0]
-              var childIdeaText = ideas[keys[i]][j][2]
-              var childClarification = (ideas[keys[i]][j][3] == null) ? 'No clarification' : ideas[keys[i]][j][3]
-              var childParticipantEmail = (ideas[keys[i]][j][4] == null) ? 'Anonymous' : ideas[keys[i]][j][4]
-              var childIdea = getIdeaTableRow(childID, childIdeaText, childClarification, childParticipantEmail)
-              $("#ideaSessions").append(childIdea)
-            }
-          }
+        for(i = 0; i < ideas.length; i++){
+          IDEA_TYPE = ideas[i]['type']
+          var ideaID = ideas[i]['ideaID']
+          var clarification = (ideas[i]['clarification']) == null ? 'No clarification' : ideas[i]['clarification']
+          var statement = ideas[i]['idea']
+          var ideaNumber = ideas[i]['ideaSessionNumber']
+          var participant = (ideas[i]['participant'] == null) ? 'Anonymous' : ideas[i]['participant']
+          var childIdea = getIdeaTableRow(ideaID, statement, clarification, participant, ideaNumber)
+          $("#ideaSessions").append(childIdea)
         }
       }
     },
@@ -114,7 +111,7 @@ function getIdeaCard(id,statement, clarification, participant){
   return ideaCard
 }
 
-function getIdeaTableRow(id, statement, clarification, participant){
+function getIdeaTableRow(id, statement, clarification, participant, ideaNumber){
   var clarificationWarning = ""
   if (clarification == "No clarification"){
     clarificationWarning = `class="table-warning"`
@@ -126,7 +123,7 @@ function getIdeaTableRow(id, statement, clarification, participant){
 
   var ideaRow = `
     <tr>
-      <th scope="row">${id}</th>
+      <th scope="row">${ideaNumber}</th>
       <td align="center"><span class="badge badge-secondary">${IDEA_TYPE}</span></td>
       <td>${statement}</td>
       <td ${clarificationWarning}>${clarification}</td>
@@ -156,8 +153,9 @@ $("#addIdeabtn").click(function() {
           sessionID : localStorage.getItem("SessionId")
         },
         success : function (response) {
+          console.log(response)
           if (response['Success']){
-            var ideaRow = getIdeaTableRow(response['ideaID'], statement, "No clarification", participant)
+            var ideaRow = getIdeaTableRow(response['ideaID'], statement, "No clarification", participant, response['ideaNumber'])
             $("#ideaSessions").append(ideaRow)
             $("#statement").val("")
             $("#participantSelection").val("")
