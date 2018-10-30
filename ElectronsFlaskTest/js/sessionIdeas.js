@@ -190,7 +190,8 @@ interact('.dropzone').dropzone({
 
     draggableElement.classList.remove('dropzone')
     draggableElement.classList.remove('draggable')
-    $(draggableElement).find("button .close").css("display", "inline")
+    
+    $(draggableElement).find("button.close").css("display", "inline")
     $(draggableElement).css('z-index', $(dropzoneElement).css('z-index'));
     $($(dropzoneElement).children()[0].children[0]).append(draggableElement)
     $($(dropzoneElement).children()[0].children[0]).append(childrenIdeas)
