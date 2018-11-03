@@ -79,10 +79,11 @@ function startGeneralStructure(amountIdeas){
   $.ajax({
     url : "http://127.0.0.1:5000/start_general_structure",
     type : "POST",
-    data : {
+    data : JSON.stringify({
       sessionID : localStorage.getItem("SessionId"),
-      amountIdeas : amountIdeas
-    },
+      ideas : ideas
+    }),
+    contentType : "application/json",
     success : function (response) { 
       if (response['Success']){
         getNextQuestion()
