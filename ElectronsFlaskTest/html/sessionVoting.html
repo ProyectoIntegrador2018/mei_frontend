@@ -34,12 +34,41 @@
 			  </li>
 			</ul>
 		</nav>
-		<div class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll">
+
+		<div id="CaptureVotingScheme" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
 			<div class="row">
-				<div class="col-9" id="ideasSectionVoting">
+        <form class="form-signin">
+          <h3>Select Voting Scheme: </h3>
+
+          <select class="form-control mt-2 shadow-sm" id="inputVotingScheme" onchange="showVotingOptions()">
+            <option value="" selected disabled hidden>Voting Option</option>
+						<option value="no_voting">No voting required</option>
+						<option value="top_x">Vote for X Top ideas</option>
+						<option value="x_ideas">Vote for X% of ideas</option>
+          </select> <br>
+
+					<div id="votingOptions">
+						<input id="x_ideas" type="number" name="ideas" value=0><br>
+					</div>
+
+          <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_voting_details">Continue</button>
+        </form>
+			</div>
+		</div>
+
+		<div id="CaptureVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
+			<div class="row">
+
+				<div class="col-2" id="ideasSectionResults">
+          <h3>Voting Results</h3>
+
+        </div>
+
+				<div class="col-6" id="ideasSectionVoting">
           <h3>Session Ideas</h3>
 
         </div>
+
 				<div class="col-3">
           <form class="form-signin">
             <h3>Select Participant: </h3>
@@ -50,13 +79,14 @@
           </form>
 				</div>
 			</div>
+		</div>
+
+		<div id="NoVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
 			<div class="row">
-				<div class="col-9" id="ideasSectionResults">
-          <h3>Voting Results</h3>
-          
-        </div>
+      	<h3>No voting selected on this session :)</h3>
 			</div>
 		</div>
+
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>
