@@ -37,14 +37,13 @@
           <h3>Select Voting Scheme: </h3>
 
           <select class="form-control mt-2 shadow-sm" id="inputVotingScheme" onchange="showVotingOptions()">
-            <option value="" selected disabled hidden>Voting Option</option>
 						<option value="no_voting">No voting required</option>
 						<option value="top_x">Vote for X Top ideas</option>
 						<option value="x_ideas">Vote for X% of ideas</option>
           </select> <br>
 
-					<div id="votingOptions">
-						<input id="x_ideas" type="number" name="ideas" value=0><br>
+					<div id="votingOptions" style="display: none">
+						<input id="x_ideas" type="number" name="ideas" value=1 min="1" onchange="setVotingText()"><p id="votingText">/10 = 0%</p><br>
 					</div>
 
           <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_voting_details">Continue</button>
