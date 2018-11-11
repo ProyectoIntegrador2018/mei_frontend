@@ -152,8 +152,10 @@ function editIdea(ideaID) {
   statement = $("#statement-" + ideaID).text()
   author = $("#author-" + ideaID).text()
   beforeEdit[ideaID] = {'statement': statement, 'author': author}
+  select = $("#participantSelection").clone()
+  select.val(author)
   $("#statement-" + ideaID).html(`<input type='text' value='${statement}' style='width: 100%'></input>`)
-  $("#author-" + ideaID).html($("#participantSelection").clone())
+  $("#author-" + ideaID).html(select)
 }
 
 function cancelEditIdea(ideaID) {
@@ -171,14 +173,12 @@ function saveIdea(ideaID) {
     type : "POST",
     data : {
       ideaID: ideaID,
-      statement: $("#statement-" + ideaID).val(),
-      author: $("#author-" + ideaID).val()
+      statement: $("#statement-" + ideaID + ">input").val(),
+      author: $("#author-" + ideaID + ">select").val()
     },
     success : function (response) { 
       if (response['Success']){
-        beforeEdit[ideaID]['statement'] = $("#statement-" + ideaID).val()
-        beforeEdit[ideaID]['author'] = $("#author-" + ideaID).val()
-        cancelEditIdea(ideaID)
+        window.location.replace("triggeringQuestion.html")
       }
     },
     error : function (error) {
