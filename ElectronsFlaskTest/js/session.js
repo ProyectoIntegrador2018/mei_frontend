@@ -60,7 +60,7 @@ function getSessionInfo(id) {
 
 function startSession(id){
 	localStorage.setItem("SessionId", id)
-	window.location.replace("sessionIdeas.html")
+	window.location.replace("triggeringQuestion.html")
 }
 
 $("#back").click(function(e) {

@@ -29,7 +29,7 @@ function getCategoryCard(categoryID, categoryName, ideasInCategory) {
 			  		onfocus="enterFocus('${categoryID}')"
 			  		onfocusout="exitFocus('${categoryID}')"
 			  		style="width: 75%">
-			  			${categoryName}
+			  			<b>${categoryName}<b>
 		  		</h4>
 			  </div>
 			  <div class="card-body">
