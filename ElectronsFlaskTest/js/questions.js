@@ -95,6 +95,54 @@ function startGeneralStructure(amountIdeas){
   });
 }
 
+function getIdeas(){
+  ideasToStructure = localStorage.getItem("ideasToStructure")
+
+  if(ideasToStructure != null){
+    $.ajax({
+      url : "http://127.0.0.1:5000/get_all_session_ideas_in",
+      type : "POST",
+      data : {
+        sessionID : localStorage.getItem("SessionId"),
+        ideasToStructure : ideasToStructure
+      },
+      success : function (response) {
+        if (response['Success']) {
+          var i = 0
+          var ideasReceived = response['Ideas']
+          if (ideasReceived.length == 0) {
+            $("#categories").css('visibility', 'hidden')
+            $("#warning").css('visibility', 'visible')
+            $("#warning>div>h1").text('No elements found in this session.')
+          }
+          else if (ideasReceived.length == 1) {
+            $("#categories").css('visibility', 'hidden')
+            $("#warning").css('visibility', 'visible')
+            $("#warning>div>h1").text('At least two elements are needed in this session.')
+          }
+          else {
+            $("#questions").css('visibility', 'visible')
+            $("#warning").css('visibility', 'hidden')
+            ideasCards = ""
+            for(i = 0; i < ideasReceived.length; i++){
+              ideas.push(ideasReceived[i])
+              ideasCards = ideasCards + getIdeaCard(ideasReceived[i])
+            }
+
+            $("#ideas").append(ideasCards)
+          }
+        }
+      },
+      error : function (error) {
+        console.log("Error: " + error);
+      }
+    });
+  } else {
+    console.log("No Ideas to Structure Selected")
+  }
+}
+
+
 function answerQuestion(answer) {
   $.ajax({
     url : "http://127.0.0.1:5000/answer_question",

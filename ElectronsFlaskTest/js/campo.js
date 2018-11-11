@@ -113,7 +113,7 @@ function getIdeas(){
 
   if(ideasToStructure != null){
     $.ajax({
-      url : "http://127.0.0.1:5000/get_all_session_ideas",
+      url : "http://127.0.0.1:5000/get_all_session_ideas_in",
       type : "POST",
       data : {
         sessionID : localStorage.getItem("SessionId"),
