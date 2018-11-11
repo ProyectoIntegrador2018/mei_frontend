@@ -8,8 +8,9 @@
 		<title>MEI</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="../styles/projects.css" rel="stylesheet">
 	</head>
-	<body style="padding-top: 65px;">
+	<body style="padding-top: 65px">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
 			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 				<li class="nav-item active">
@@ -38,16 +39,59 @@
 				</li>
 			</ul>
 		</nav>
-		<div class="container-fluid" style="font-family: 'Roboto';">
-			<div id="categories">
+		<div class="container-fluid" style="font-family: 'Roboto'">
+			<div id="questions" style="visibility: visible;">
+				<div class="row justify-content-center">
+					<div id="firstElement">
+						<div class="card" style="width: 75vw">
+						  <div class="card-header" id="firstElementHeader">
+						  </div>
+						  <div class="card-body text-center">
+						    <h1 class="card-title" id="firstElementStatement"></h1>
+						  </div>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-center mt-4 mb-4">
+					<h2>has</h2>
+				</div>
 				<div class="row">
-					<div class="col-12 input-group">
-						<h2>Elements</h2>
-						<span class="input-group-btn"><button type="button" id="saveCategories" class="btn btn-primary ml-2">Save categories</button></span>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-primary btn-lg btn-block" id="higher">higher priority</button>
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-primary btn-lg btn-block" id="lower">lower priority</button>
+					</div>
+					<div class="col-md-4">
+						<button type="button" class="btn btn-primary btn-lg btn-block" id="same">same priority</button>
 					</div>
 				</div>
 				<div class="row">
-					<div id="ideas" class="col-12" style="height: 85%">
+					<div class="col-md-4">
+						<label class="mt-2" for="higher-votes">Number of votes:</label>
+						<input type="number" value="0" id="higher-votes" min="0">
+					</div>
+					<div class="col-md-4">
+						<label class="mt-2" for="lower-votes">Number of votes:</label>
+						<input type="number" value="0" id="lower-votes" min="0">
+					</div>
+					<div class="col-md-4">
+						<label class="mt-2" for="same-votes">Number of votes:</label>
+						<input type="number" value="0" id="same-votes" min="0">
+					</div>
+				</div>
+				<div class="row justify-content-center mt-4 mb-4">
+					<h2>than</h2>
+				</div>
+				<div class="row justify-content-center">
+					<div id="secondElement">
+						<div class="card" style="width: 75vw">
+						  <div class="card-header" id="secondElementHeader">
+						  </div>
+						  <div class="card-body text-center">
+						    <h1 class="card-title" id="secondElementStatement"></h1>
+						  </div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -60,7 +104,7 @@
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>
-		<script src="../js/campo.js"></script>
+		<script src="../js/prioridades.js"></script>
 		<script>if (window.module) module = window.module;</script>
 	</body>
 </html>
