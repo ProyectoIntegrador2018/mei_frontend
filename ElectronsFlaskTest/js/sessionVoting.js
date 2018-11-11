@@ -20,7 +20,43 @@ function setVotingState(state){
     console.log("No previous votation details found")
     $("#CaptureVotingScheme").show()
     $("#CaptureVotes").hide()
+    updateVotingText()
   }
+}
+
+function setVotingText(){
+console.log("setVotingText")
+  parentIdeas = localStorage.getItem("parentIdeas")
+  ideasToVote = $("#x_ideas").val()
+  percentage = (Number(ideasToVote)*100 / Number(parentIdeas)).toString() + '%'
+  console.log(document.getElementById('votingText').innerHTML)
+  document.getElementById('votingText').innerHTML = '/'+parentIdeas+ ' = ' + percentage ;
+}
+
+function updateVotingText(){
+  console.log("UpdateVotingText")
+
+  $.ajax({
+    url : "http://127.0.0.1:5000/getNumberOfParentIdeas",
+    type : "POST",
+    data : {
+      sessionID : localStorage.getItem("SessionId")
+    },
+    success : function (response) {
+      if (response['Success']) {
+        parentIdeas = response['parentIdeas']
+        localStorage.setItem("parentIdeas",parentIdeas)
+        $("#x_ideas").attr("max",parentIdeas)
+        setVotingText()
+      } else {
+        console.log("Call error");
+        console.log(response);
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
 }
 
 function getVotingDetails(){
@@ -190,12 +226,13 @@ function addIdeaCardVotingPriority(id,ideasOptions){
 }
 
 function addIdeaCardVotingResult(id){
+  firstID = localStorage.getItem("firstID")
   var ideaCard = `
     <div class="col-sm-2">
     <div id="ideaCardVoting" class="card" style="width: 5rem;"">
       <div class="card-body shadow-sm">
           <div class="col-1">
-            <h4 class="card-text">${id}</h4>
+            <h4 class="card-text">${id-(firstID-1)}</h4>
           </div>
       </div>
     </div>
@@ -209,7 +246,7 @@ function getCurrentVotes(){
   firstID = localStorage.getItem("firstID")
 
   for(i=1; i<=ideasToVote; i++){
-      votes.push( Number($("#inputIdeaVoting"+i).val()) + (firstID - 1) )
+      votes.push( Number($("#inputIdeaVoting"+i).val()) )
   }
   return votes
 }
