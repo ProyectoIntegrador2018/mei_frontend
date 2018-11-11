@@ -28,7 +28,7 @@ function deleteSessionPriorities() {
 	  data : {
 	    sessionID : localStorage.getItem("SessionId")
 	  },
-	  success : function (response) { 
+	  success : function (response) {
 	    if (response['Success']) {
 	    	getIdeas()
 	    }
@@ -37,57 +37,6 @@ function deleteSessionPriorities() {
 	    console.log("Error: " + error);
 	  }
 	});
-}
-
-function getIdeas(){
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_all_session_ideas",
-    type : "POST",
-    data : {
-      sessionID : localStorage.getItem("SessionId")
-    },
-    success : function (response) { 
-      if (response['Success']) {
-        var i = 0
-        var ideasReceived = response['Ideas']
-        if (ideasReceived.length == 0) {
-          $("#questions").css('visibility', 'hidden')
-          $("#warning").css('visibility', 'visible')
-          $("#warning>div>h1").text('No elements found in this session.')
-        }
-        else if (ideasReceived.length == 1) {
-          $("#questions").css('visibility', 'hidden')
-          $("#warning").css('visibility', 'visible')
-          $("#warning>div>h1").text('At least two elements are needed in this session.')
-        }
-        else {
-          $("#questions").css('visibility', 'visible')
-          $("#warning").css('visibility', 'hidden')
-          for(i = 0; i < ideasReceived.length; i++){
-            ideas.push(ideasReceived[i])
-            ideaIDToIndex[ideasReceived[i]['ideaID'].toString()] = i
-            questionMatrix[i] = []
-          }
-
-          for (i = 0; i < ideasReceived.length; i++) {
-            for (var j = 0; j < ideasReceived.length; j++) {
-              if (i == j){
-                questionMatrix[i][j] = true
-              }
-              else{
-                questionMatrix[i][j] = false
-              }
-            }
-          }
-
-          setNextQuestion(0, 1)
-        }
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error);
-    }
-  });
 }
 
 function setNextQuestion(i, j) {
@@ -315,7 +264,7 @@ function savePriorities(){
 		})
 		,
 		contentType: "application/json",
-		success : function (response) { 
+		success : function (response) {
 		  console.log(response)
 		  if (response['Success']) {
 		  	// Alert and redirect to categories visualization

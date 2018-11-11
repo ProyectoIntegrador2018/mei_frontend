@@ -17,7 +17,7 @@ function getIdeaTypeQuestion(ideaType){
     data : {
       ideaType : ideaType
     },
-    success : function (response) { 
+    success : function (response) {
       if (response['Success']) {
         $("#relationQuestion").text(response['question'])
       }
@@ -35,7 +35,7 @@ function hasStructure(){
     data : {
       sessionID : localStorage.getItem("SessionId")
     },
-    success : function (response) { 
+    success : function (response) {
       if (response['Success']) {
         if (response['hasStructure']) {
           var shouldDelete = confirm("This session already has a general structure. Click OK to overwrite it or close this dialog to view the structure.")
@@ -64,7 +64,7 @@ function deleteGeneralStructureAndMatrix() {
     data : {
       sessionID : localStorage.getItem("SessionId")
     },
-    success : function (response) { 
+    success : function (response) {
       if (response['Success']) {
         getIdeas()
       }
@@ -84,49 +84,9 @@ function startGeneralStructure(amountIdeas){
       ideas : ideas
     }),
     contentType : "application/json",
-    success : function (response) { 
+    success : function (response) {
       if (response['Success']){
         getNextQuestion()
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error);
-    }
-  });
-}
-
-function getIdeas(){
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_all_session_ideas",
-    type : "POST",
-    data : {
-      sessionID : localStorage.getItem("SessionId")
-    },
-    success : function (response) { 
-      if (response['Success']) {
-        var i = 0
-        var ideasReceived = response['Ideas']
-        if (ideasReceived.length == 0) {
-          $("#questions").css('visibility', 'hidden')
-          $("#warning").css('visibility', 'visible')
-          $("#warning>div>h1").text('No elements found in this session.')
-        }
-        else if (ideasReceived.length == 1) {
-          $("#questions").css('visibility', 'hidden')
-          $("#warning").css('visibility', 'visible')
-          $("#warning>div>h1").text('At least two elements are needed in this session.')
-        }
-        else {
-          $("#questions").css('visibility', 'visible')
-          $("#warning").css('visibility', 'hidden')
-          for(i = 0; i < ideasReceived.length; i++){
-            ideas.push(ideasReceived[i])
-          }
-
-          getIdeaTypeQuestion(ideasReceived[0]['type'])
-
-          startGeneralStructure(ideasReceived.length)
-        }
       }
     },
     error : function (error) {
@@ -145,7 +105,7 @@ function answerQuestion(answer) {
       secondElement : question['secondElement'],
       answer : answer
     },
-    success : function (response) { 
+    success : function (response) {
       if (response['finished']) {
         console.log(response['levels'])
         $.ajax({
@@ -195,7 +155,7 @@ function getNextQuestion(){
     data : {
       sessionID : localStorage.getItem("SessionId")
     },
-    success : function (response) { 
+    success : function (response) {
       console.log(response['first'] + 1, "influences" ,response['second'] + 1)
       firstElement = ideas[response['first']]
       secondElement = ideas[response['second']]
