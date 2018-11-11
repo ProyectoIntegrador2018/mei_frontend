@@ -4,6 +4,9 @@ $(document).ready(function(){
     setVotingDetails()
   })
   getVotingDetails()
+  $('#continue_structuring').click(function(e){
+    
+  })
 })
 
 function setVotingState(state){
@@ -228,14 +231,10 @@ function addIdeaCardVotingPriority(id,ideasOptions){
 function addIdeaCardVotingResult(id){
   firstID = localStorage.getItem("firstID")
   var ideaCard = `
-    <div class="col-sm-2">
-    <div id="ideaCardVoting" class="card" style="width: 5rem;"">
-      <div class="card-body shadow-sm">
-          <div class="col-1">
-            <h4 class="card-text">${id-(firstID-1)}</h4>
+    <div id="ideaCardVoting" class="card" style="width: 3rem;"">
+          <div class="row-4" style = "padding-left: 10px;">
+            ${id-(firstID-1)}    <input type="checkbox" name="ideasToStructure" value="${id-(firstID-1)}" checked>
           </div>
-      </div>
-    </div>
     </div>`
   $("#ideasSectionResults").append(ideaCard)
 }
