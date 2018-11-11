@@ -67,13 +67,24 @@ function getIdeas(){
           else {
             $("#questions").css('visibility', 'visible')
             $("#warning").css('visibility', 'hidden')
-            ideasCards = ""
             for(i = 0; i < ideasReceived.length; i++){
               ideas.push(ideasReceived[i])
-              ideasCards = ideasCards + getIdeaCard(ideasReceived[i])
+              ideaIDToIndex[ideasReceived[i]['ideaID'].toString()] = i
+              questionMatrix[i] = []
             }
 
-            $("#ideas").append(ideasCards)
+            for (i = 0; i < ideasReceived.length; i++) {
+              for (var j = 0; j < ideasReceived.length; j++) {
+                if (i == j){
+                  questionMatrix[i][j] = true
+                }
+                else{
+                  questionMatrix[i][j] = false
+                }
+              }
+            }
+
+            setNextQuestion(0, 1)
           }
         }
       },

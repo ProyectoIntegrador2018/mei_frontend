@@ -12,7 +12,7 @@ $(document).ready(function(){
 function saveForStructuring(){
   firstID = Number(localStorage.getItem("firstID"))
   var checkedValues = $('input[name ="ideasToStructure"]:checked').map(function() {
-    return Number(this.value) + firstID - 1 ;
+    return Number(this.value);
   }).get();
   console.log(checkedValues)
   localStorage.setItem("ideasToStructure",checkedValues)

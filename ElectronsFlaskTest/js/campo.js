@@ -53,7 +53,6 @@ function deleteSessionCategories() {
 	  success : function (response) {
 	    if (response['Success']) {
 	    	getIdeas()
-	    	getRelationshipQuestion()
 	    }
 	  },
 	  error : function (error) {

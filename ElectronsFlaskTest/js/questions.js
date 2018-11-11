@@ -126,10 +126,11 @@ function getIdeas(){
             ideasCards = ""
             for(i = 0; i < ideasReceived.length; i++){
               ideas.push(ideasReceived[i])
-              ideasCards = ideasCards + getIdeaCard(ideasReceived[i])
             }
 
-            $("#ideas").append(ideasCards)
+            getIdeaTypeQuestion(ideasReceived[0]['type'])
+
+            startGeneralStructure(ideasReceived.length)
           }
         }
       },
