@@ -5,9 +5,18 @@ $(document).ready(function(){
   })
   getVotingDetails()
   $('#continue_structuring').click(function(e){
-    
+    saveForStructuring()
   })
 })
+
+function saveForStructuring(){
+  firstID = Number(localStorage.getItem("firstID"))
+  var checkedValues = $('input[name ="ideasToStructure"]:checked').map(function() {
+    return Number(this.value) + firstID - 1 ;
+  }).get();
+  console.log(checkedValues)
+  localStorage.setItem("ideasToStructure",checkedValues)
+}
 
 function setVotingState(state){
   console.log("setVotingState")
