@@ -76,11 +76,7 @@ function getIdeasVotingResults(){
       if (response['Success']) {
         response['votes'].forEach(function (result){
           console.log(result)
-<<<<<<< HEAD
-          addIdeaCardVotingResult(result,getIdeaText(result))
-=======
           addIdeaCardVotingResult(dict[result][0],getIdeaText(dict[result][1]))
->>>>>>> b1ed21b4d1d6402072eba38518d6c6dced5f4188
         })
       }
     },
@@ -247,19 +243,6 @@ function getIdeasVoting(){
   });
 }
 
-<<<<<<< HEAD
-function getIdeaText(id){
-  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
-  var ideasText = localStorage.getItem("ideasText").split(',')
-  for (var i = 0; i < ideasIDs.length ; i++) {
-    if (ideasIDs[i] == id){
-      return ideasText[i]
-    }
-  }
-}
-
-=======
->>>>>>> b1ed21b4d1d6402072eba38518d6c6dced5f4188
 function getSessionParticipantsVoting(){
 	$.ajax({
 		url : "http://127.0.0.1:5000/get_session_participants",
@@ -389,10 +372,6 @@ function saveIdeasOptions(ideas){
   for (var i = 0; i < ideasIDs.length ; i++) {
     ideaID = ideasIDs[i]
     ideaNumber = ideaSessionNumbers[i]
-<<<<<<< HEAD
-=======
-    ideaNumber = ideaID - (firstID - 1)
->>>>>>> b1ed21b4d1d6402072eba38518d6c6dced5f4188
     ideaText = ideasText[i]
     ideaOptionText = ideaNumber.toString() + " - " + ideaText
     console.log(ideaOptionText)
