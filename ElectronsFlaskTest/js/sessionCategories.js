@@ -87,6 +87,7 @@ function getSessionCategories() {
 			if (response['Success']){
 				if (categories.length == 0) {
 					$("#warning").append("<h1>No se ha realizado la estructuración de campo!</h1>")
+					$("#title").css("display", "none")
 				}
 
 				for (var i = 0; i < categories.length; i++) {
