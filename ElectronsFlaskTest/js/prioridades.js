@@ -41,7 +41,7 @@ function deleteSessionPriorities() {
 
 function getIdeas(){
   ideasToStructure = localStorage.getItem("ideasToStructure")
-
+  console.log(ideasToStructure)
   if(ideasToStructure != null){
     $.ajax({
       url : "http://127.0.0.1:5000/get_all_session_ideas_in",
@@ -51,6 +51,7 @@ function getIdeas(){
         ideasToStructure : ideasToStructure
       },
       success : function (response) {
+        console.log(response)
         if (response['Success']) {
           var i = 0
           var ideasReceived = response['Ideas']
