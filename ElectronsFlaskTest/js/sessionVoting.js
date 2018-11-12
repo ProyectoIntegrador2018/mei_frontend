@@ -14,11 +14,11 @@ $(document).ready(function(){
 })
 
 function saveForStructuring(){
-  firstID = Number(localStorage.getItem("firstID"))
   var checkedValues = $('input[name ="ideasToStructure"]:checked').map(function() {
     return Number(this.value);
   }).get();
   console.log(checkedValues)
+
   localStorage.setItem("ideasToStructure",checkedValues)
 }
 
@@ -49,6 +49,38 @@ function setVotingState(state){
     $("#ResetVoting").hide()
     updateVotingText()
   }
+}
+
+function getIdeasVotingResults(){
+  var dict = {}
+  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
+  var ideasText = localStorage.getItem("ideasText").split(',')
+  var ideaSessionNumbers = localStorage.getItem("ideaSessionNumbers").split(',')
+
+  for (var i = 0; i < ideasIDs.length ; i++) {
+    dict[ideasIDs[i]] = [ideaSessionNumbers[i],ideasText[i]]
+  }
+  $.ajax({
+    url : "http://127.0.0.1:5000/get_voting_results",
+    type : "POST",
+    data : {
+      votingScheme : localStorage.getItem("votingScheme"),
+      sessionID : localStorage.getItem("SessionId"),
+      ideasToVote : localStorage.getItem("ideasToVote")
+    },
+    success : function (response) {
+      console.log(response)
+      if (response['Success']) {
+        response['votes'].forEach(function (result){
+          console.log(result)
+          addIdeaCardVotingResult(dict[result][0],dict[result][1],result)
+        })
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
 }
 
 function reset_votes(){
@@ -208,41 +240,6 @@ function getIdeasVoting(){
   });
 }
 
-function getIdeaText(id){
-  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
-  var ideasText = localStorage.getItem("ideasText").split(',')
-  for (var i = 0; i < ideasIDs.length ; i++) {
-    if (ideasIDs[i] == id){
-      return ideasText[i]
-    }
-  }
-}
-
-function getIdeasVotingResults(){
-  firstID = localStorage.getItem("firstID")
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_voting_results",
-    type : "POST",
-    data : {
-      votingScheme : localStorage.getItem("votingScheme"),
-      sessionID : localStorage.getItem("SessionId"),
-      ideasToVote : localStorage.getItem("ideasToVote")
-    },
-    success : function (response) {
-      if (response['Success']) {
-        response['votes'].forEach(function (result){
-          console.log(result)
-          id = result-(firstID-1)
-          addIdeaCardVotingResult(id,getIdeaText(result))
-        })
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error);
-    }
-  });
-}
-
 function getSessionParticipantsVoting(){
 	$.ajax({
 		url : "http://127.0.0.1:5000/get_session_participants",
@@ -308,11 +305,11 @@ function addIdeaCardVotingPriority(id,ideasOptions){
   $("#ideasSectionVoting").append(ideaCard)
 }
 
-function addIdeaCardVotingResult(id,ideaText){
+function addIdeaCardVotingResult(ideaSessionNumber,ideaText,id){
   var ideaCard = `
     <div id="ideaCardVoting" class="card" style="width: 10rem;"">
           <div class="row-4" style = "padding-left: 10px;">
-            ${id} - ${ideaText}   <input type="checkbox" name="ideasToStructure" value="${id}" checked>
+            ${ideaSessionNumber} - ${ideaText}   <input type="checkbox" name="ideasToStructure" value="${id}" checked>
           </div>
     </div>`
   $("#ideasSectionResults").append(ideaCard)
@@ -321,7 +318,6 @@ function addIdeaCardVotingResult(id,ideaText){
 function getCurrentVotes(){
   votes = []
   ideasToVote = localStorage.getItem("ideasToVote")
-  firstID = localStorage.getItem("firstID")
 
   for(i=1; i<=ideasToVote; i++){
       votes.push( Number($("#inputIdeaVoting"+i).val()) )
@@ -349,13 +345,15 @@ function getParentIdeas(order){
       order : order
     },
     success : function (response) {
+      console.log(response)
       if (response['Success']) {
         if (order != "random") {
           localStorage.setItem("ideasIDs",response['ideasIDs'])
           localStorage.setItem("ideasText",response['ideasText'])
-          getFirstIdeaID()
+          localStorage.setItem("ideaSessionNumbers",response['ideaSessionNumbers'])
         }
       }
+      saveIdeasOptions()
     },
     error : function (error) {
       console.log("Error: " + error);
@@ -363,16 +361,16 @@ function getParentIdeas(order){
   });
 }
 
-function saveIdeasOptions(ideas){
+function saveIdeasOptions(){
   var ideasToVote = localStorage.getItem("ideasToVote")
   var ideasIDs = localStorage.getItem("ideasIDs").split(',')
   var ideasText = localStorage.getItem("ideasText").split(',')
-  var firstID = localStorage.getItem("firstID")
+  var ideaSessionNumbers = localStorage.getItem("ideaSessionNumbers").split(',')
   var options = ""
 
   for (var i = 0; i < ideasIDs.length ; i++) {
     ideaID = ideasIDs[i]
-    ideaNumber = ideaID - (firstID - 1)
+    ideaNumber = ideaSessionNumbers[i]
     ideaText = ideasText[i]
     ideaOptionText = ideaNumber.toString() + " - " + ideaText
     console.log(ideaOptionText)
@@ -398,27 +396,6 @@ function setIdeasCards(){
       addIdeaCardVoting(i+1,options)
     }
   }
-
-}
-
-function getFirstIdeaID(){
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_first_ideaID",
-    type : "POST",
-    data : {
-      sessionID : localStorage.getItem("SessionId")
-    },
-    success : function (response) {
-      if (response['Success']) {
-        console.log(response)
-        localStorage.setItem("firstID",response['firstID'])
-        saveIdeasOptions()
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error)
-    }
-  });
 }
 
 function generateIdeaCards(){
