@@ -93,7 +93,7 @@ function getSessionCard(id,triggeringQuestion){
         <h1 class="card-text text-center">${triggeringQuestion}</h1>
         <button id="trigAdd" class="btnadd float-right" data-toggle="modal" data-target="#addIdea"><i class="fa fa-plus"></i></button>
         <button id="trigTags" class="btnadd float-right" data-toggle="modal" data-target="#addTag"><i class="fa fa-tags"></i></button>
-        <button id="trigEdit" class="btnadd float-right"><i class="fas fa-edit"></i></button>
+        <!--<button id="trigEdit" class="btnadd float-right"><i class="fas fa-edit"></i></button>-->
       </div>
     </div>`
   return sessionCard
