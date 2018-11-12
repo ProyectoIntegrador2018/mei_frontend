@@ -123,17 +123,17 @@ function getIdeas(){
           var i = 0
           var ideasReceived = response['Ideas']
           if (ideasReceived.length == 0) {
-            $("#categories").css('visibility', 'hidden')
+            $("#categories").css('display', 'none')
             $("#warning").css('visibility', 'visible')
             $("#warning>div>h1").text('No elements found in this session.')
           }
           else if (ideasReceived.length == 1) {
-            $("#categories").css('visibility', 'hidden')
+            $("#categories").css('display', 'none')
             $("#warning").css('visibility', 'visible')
             $("#warning>div>h1").text('At least two elements are needed in this session.')
           }
           else {
-            $("#questions").css('visibility', 'visible')
+            $("#categories").css('visibility', 'visible')
             $("#warning").css('visibility', 'hidden')
             ideasCards = ""
             for(i = 0; i < ideasReceived.length; i++){

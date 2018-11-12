@@ -111,12 +111,12 @@ function getIdeas(){
           var i = 0
           var ideasReceived = response['Ideas']
           if (ideasReceived.length == 0) {
-            $("#categories").css('visibility', 'hidden')
+            $("#questions").css('display', 'none')
             $("#warning").css('visibility', 'visible')
             $("#warning>div>h1").text('No elements found in this session.')
           }
           else if (ideasReceived.length == 1) {
-            $("#categories").css('visibility', 'hidden')
+            $("#questions").css('display', 'none')
             $("#warning").css('visibility', 'visible')
             $("#warning>div>h1").text('At least two elements are needed in this session.')
           }
