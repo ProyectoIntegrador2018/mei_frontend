@@ -14,7 +14,6 @@ $(document).ready(function(){
 })
 
 function saveForStructuring(){
-  firstID = Number(localStorage.getItem("firstID"))
   var checkedValues = $('input[name ="ideasToStructure"]:checked').map(function() {
     return Number(this.value);
   }).get();
@@ -49,6 +48,39 @@ function setVotingState(state){
     $("#ResetVoting").hide()
     updateVotingText()
   }
+}
+
+function getIdeasVotingResults(){
+  var dict = {}
+  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
+  var ideasText = localStorage.getItem("ideasText").split(',')
+  var ideaSessionNumbers = localStorage.getItem("ideaSessionNumbers").split(',')
+
+  for (var i = 0; i < ideasIDs.length ; i++) {
+    dict[ideasIDs[i]] = (ideaSessionNumbers[i],ideasText[i])
+  }
+
+  firstID = localStorage.getItem("firstID")
+  $.ajax({
+    url : "http://127.0.0.1:5000/get_voting_results",
+    type : "POST",
+    data : {
+      votingScheme : localStorage.getItem("votingScheme"),
+      sessionID : localStorage.getItem("SessionId"),
+      ideasToVote : localStorage.getItem("ideasToVote")
+    },
+    success : function (response) {
+      if (response['Success']) {
+        response['votes'].forEach(function (result){
+          console.log(result)
+          addIdeaCardVotingResult(dict[result][0],getIdeaText(dict[result][1]))
+        })
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
 }
 
 function reset_votes(){
@@ -208,41 +240,6 @@ function getIdeasVoting(){
   });
 }
 
-function getIdeaText(id){
-  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
-  var ideasText = localStorage.getItem("ideasText").split(',')
-  for (var i = 0; i < ideasIDs.length ; i++) {
-    if (ideasIDs[i] == id){
-      return ideasText[i]
-    }
-  }
-}
-
-function getIdeasVotingResults(){
-  firstID = localStorage.getItem("firstID")
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_voting_results",
-    type : "POST",
-    data : {
-      votingScheme : localStorage.getItem("votingScheme"),
-      sessionID : localStorage.getItem("SessionId"),
-      ideasToVote : localStorage.getItem("ideasToVote")
-    },
-    success : function (response) {
-      if (response['Success']) {
-        response['votes'].forEach(function (result){
-          console.log(result)
-          id = result-(firstID-1)
-          addIdeaCardVotingResult(id,getIdeaText(result))
-        })
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error);
-    }
-  });
-}
-
 function getSessionParticipantsVoting(){
 	$.ajax({
 		url : "http://127.0.0.1:5000/get_session_participants",
@@ -321,7 +318,6 @@ function addIdeaCardVotingResult(id,ideaText){
 function getCurrentVotes(){
   votes = []
   ideasToVote = localStorage.getItem("ideasToVote")
-  firstID = localStorage.getItem("firstID")
 
   for(i=1; i<=ideasToVote; i++){
       votes.push( Number($("#inputIdeaVoting"+i).val()) )
@@ -353,7 +349,7 @@ function getParentIdeas(order){
         if (order != "random") {
           localStorage.setItem("ideasIDs",response['ideasIDs'])
           localStorage.setItem("ideasText",response['ideasText'])
-          getFirstIdeaID()
+          localStorage.setItem("ideaSessionNumbers",response['ideaSessionNumbers'])
         }
       }
     },
@@ -367,11 +363,12 @@ function saveIdeasOptions(ideas){
   var ideasToVote = localStorage.getItem("ideasToVote")
   var ideasIDs = localStorage.getItem("ideasIDs").split(',')
   var ideasText = localStorage.getItem("ideasText").split(',')
-  var firstID = localStorage.getItem("firstID")
+  var ideaSessionNumbers = localStorage.getItem("ideaSessionNumbers").split(',')
   var options = ""
 
   for (var i = 0; i < ideasIDs.length ; i++) {
     ideaID = ideasIDs[i]
+    ideaNumber = ideaSessionNumbers[i]
     ideaNumber = ideaID - (firstID - 1)
     ideaText = ideasText[i]
     ideaOptionText = ideaNumber.toString() + " - " + ideaText
@@ -398,27 +395,6 @@ function setIdeasCards(){
       addIdeaCardVoting(i+1,options)
     }
   }
-
-}
-
-function getFirstIdeaID(){
-  $.ajax({
-    url : "http://127.0.0.1:5000/get_first_ideaID",
-    type : "POST",
-    data : {
-      sessionID : localStorage.getItem("SessionId")
-    },
-    success : function (response) {
-      if (response['Success']) {
-        console.log(response)
-        localStorage.setItem("firstID",response['firstID'])
-        saveIdeasOptions()
-      }
-    },
-    error : function (error) {
-      console.log("Error: " + error)
-    }
-  });
 }
 
 function generateIdeaCards(){
