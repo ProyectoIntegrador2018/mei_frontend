@@ -18,6 +18,7 @@ function saveForStructuring(){
     return Number(this.value);
   }).get();
   console.log(checkedValues)
+
   localStorage.setItem("ideasToStructure",checkedValues)
 }
 
@@ -51,19 +52,14 @@ function setVotingState(state){
 }
 
 function getIdeasVotingResults(){
-<<<<<<< HEAD
-=======
   var dict = {}
   var ideasIDs = localStorage.getItem("ideasIDs").split(',')
   var ideasText = localStorage.getItem("ideasText").split(',')
   var ideaSessionNumbers = localStorage.getItem("ideaSessionNumbers").split(',')
 
   for (var i = 0; i < ideasIDs.length ; i++) {
-    dict[ideasIDs[i]] = (ideaSessionNumbers[i],ideasText[i])
+    dict[ideasIDs[i]] = [ideaSessionNumbers[i],ideasText[i]]
   }
-
->>>>>>> b1ed21b4d1d6402072eba38518d6c6dced5f4188
-  firstID = localStorage.getItem("firstID")
   $.ajax({
     url : "http://127.0.0.1:5000/get_voting_results",
     type : "POST",
@@ -73,10 +69,11 @@ function getIdeasVotingResults(){
       ideasToVote : localStorage.getItem("ideasToVote")
     },
     success : function (response) {
+      console.log(response)
       if (response['Success']) {
         response['votes'].forEach(function (result){
           console.log(result)
-          addIdeaCardVotingResult(dict[result][0],getIdeaText(dict[result][1]))
+          addIdeaCardVotingResult(dict[result][0],dict[result][1],result)
         })
       }
     },
@@ -308,11 +305,11 @@ function addIdeaCardVotingPriority(id,ideasOptions){
   $("#ideasSectionVoting").append(ideaCard)
 }
 
-function addIdeaCardVotingResult(id,ideaText){
+function addIdeaCardVotingResult(ideaSessionNumber,ideaText,id){
   var ideaCard = `
     <div id="ideaCardVoting" class="card" style="width: 10rem;"">
           <div class="row-4" style = "padding-left: 10px;">
-            ${id} - ${ideaText}   <input type="checkbox" name="ideasToStructure" value="${id}" checked>
+            ${ideaSessionNumber} - ${ideaText}   <input type="checkbox" name="ideasToStructure" value="${id}" checked>
           </div>
     </div>`
   $("#ideasSectionResults").append(ideaCard)
@@ -348,6 +345,7 @@ function getParentIdeas(order){
       order : order
     },
     success : function (response) {
+      console.log(response)
       if (response['Success']) {
         if (order != "random") {
           localStorage.setItem("ideasIDs",response['ideasIDs'])
@@ -355,6 +353,7 @@ function getParentIdeas(order){
           localStorage.setItem("ideaSessionNumbers",response['ideaSessionNumbers'])
         }
       }
+      saveIdeasOptions()
     },
     error : function (error) {
       console.log("Error: " + error);
@@ -362,7 +361,7 @@ function getParentIdeas(order){
   });
 }
 
-function saveIdeasOptions(ideas){
+function saveIdeasOptions(){
   var ideasToVote = localStorage.getItem("ideasToVote")
   var ideasIDs = localStorage.getItem("ideasIDs").split(',')
   var ideasText = localStorage.getItem("ideasText").split(',')
