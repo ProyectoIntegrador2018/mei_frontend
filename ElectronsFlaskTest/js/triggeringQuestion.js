@@ -8,6 +8,8 @@ $(document).ready(function(){
   addParticipants()
 })
 
+let beforeEdit = {}
+
 function getTriggering(){
   $.ajax({
     url : "http://127.0.0.1:5000/get_session_data",
@@ -66,7 +68,8 @@ function addParticipants(){
     },
     success : function (response) { 
       if (response['Success']){
-        console.log( response.Members.length)
+        console.log(response.Members)
+        console.log(response.Members.length)
         var option = document.createElement("option");
         for(member in response.Members) {
           var option = document.createElement("option");
@@ -124,14 +127,64 @@ function getIdeaTableRow(id, statement, clarification, participant, ideaNumber){
   var ideaRow = `
     <tr>
       <th scope="row">${ideaNumber}</th>
-      <td align="center"><span class="badge badge-secondary">${IDEA_TYPE}</span></td>
-      <td>${statement}</td>
+      <td><span class="badge badge-secondary">${IDEA_TYPE}</span></td>
+      <td id="statement-${id}">${statement}</td>
       <td ${clarificationWarning}>${clarification}</td>
-      <td>${participant}</td>
+      <td id="author-${id}">${participant}</td>
+      <td>
+        <div id="edit-${id}">
+          <button type="button" class="btn btn-primary btn-sm" onclick="editIdea('${id}')">Edit</button>
+        </div>
+        <div id="canceledit-${id}" style="display: none">
+          <button type="button" class="btn btn-primary btn-sm" onclick="saveIdea('${id}')">Save</button>
+          <button type="button" class="btn btn-primary btn-sm" onclick="cancelEditIdea('${id}')">Cancel</button>
+        </div>
+      </td>
     </tr>
   `
 
   return ideaRow
+}
+
+function editIdea(ideaID) {
+  $("#edit-" + ideaID).css("display", "none")
+  $("#canceledit-" + ideaID).css("display", "inline")
+  statement = $("#statement-" + ideaID).text()
+  author = $("#author-" + ideaID).text()
+  beforeEdit[ideaID] = {'statement': statement, 'author': author}
+  select = $("#participantSelection").clone()
+  select.val(author)
+  $("#statement-" + ideaID).html(`<input type='text' value='${statement}' style='width: 100%'></input>`)
+  $("#author-" + ideaID).html(select)
+}
+
+function cancelEditIdea(ideaID) {
+  $("#edit-" + ideaID).css("display", "inline")
+  $("#canceledit-" + ideaID).css("display", "none")
+  $("#statement-" + ideaID).text(beforeEdit[ideaID]['statement'])
+  $("#author-" + ideaID).text(beforeEdit[ideaID]['author'])
+}
+
+function saveIdea(ideaID) {
+  $("#edit-" + ideaID).css("display", "inline")
+  $("#canceledit-" + ideaID).css("display", "none")
+  $.ajax({
+    url : "http://127.0.0.1:5000/update_idea",
+    type : "POST",
+    data : {
+      ideaID: ideaID,
+      statement: $("#statement-" + ideaID + ">input").val(),
+      author: $("#author-" + ideaID + ">select").val()
+    },
+    success : function (response) { 
+      if (response['Success']){
+        window.location.replace("triggeringQuestion.html")
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
 }
 
 $("#addIdeabtn").click(function() {
