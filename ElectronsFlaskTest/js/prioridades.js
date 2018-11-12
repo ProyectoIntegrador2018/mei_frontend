@@ -303,6 +303,7 @@ function getNextQuestion() {
         }
     }
 
+    console.log(priorities)
     savePriorities()
   }
   else {
@@ -328,6 +329,8 @@ function savePriorities(){
 		  if (response['Success']) {
 		  	// Alert and redirect to categories visualization
 		  	//window.location.replace("priorities.html")
+        alert("Finished")
+        window.location.replace("priority_visualization.html")
         console.log(priorities)
 		  }
 		},
