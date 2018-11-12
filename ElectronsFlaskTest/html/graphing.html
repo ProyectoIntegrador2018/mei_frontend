@@ -7,14 +7,19 @@
 		<meta name="author" content="">
 		<title>MEI</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.css"/>
+		<script type="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.js"/>
+
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="../styles/projects.css" rel="stylesheet">
+		<link href="../styles/login.css" rel="stylesheet">
+		<link href="../styles/graphing.css" rel="stylesheet">
 	</head>
-	<body style="padding-top: 65px">
-		<div class="container-fluid" style="font-family: 'Roboto'">
-			<div class="row">
-				<div class="col-md-12">
-					<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+			<ul class="navbar-nav">
 				<li class="nav-item active">
 					<a class="nav-link" href="session.html">Back</a>
 				</li>
@@ -25,44 +30,22 @@
 					<a class="nav-link" href="sessionIdeas.html">Element compression</a>
 				</li>
 				<li class="nav-item active">
-			      	<a class="nav-link" href="sessionVoting.html">Voting</a>
-				  </li>
-				<li class="nav-item active">
-					<a class="nav-link" href="questions.html">General</a>
+					<a class="nav-link" href="sessionVoting.html">Voting</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="estructura_campo.html">Campo</a>
+					<a class="nav-link" href="questions.html">Questions</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="categories.html">Categories</a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="prioridades_preguntas.html">Prioridades</a>
+					<a class="nav-link" href="graphing.html">Graphing</a>
 				</li>
 			</ul>
 		</nav>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<h2 id="title">Categories</h2>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center" id="warning">
-				</div>
-				<div class="col-md-6" id="categoriesSection1">
-				</div>
-				<div class="col-md-6" id="categoriesSection2">
-				</div>
-			</div>
-			<button id='print-pdf'>Print</button>
-		</div>
+		<div class="network">Network Graph</div>
+		<div class="report">Node</div>
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>
-		<script src="../js/sessionCategories.js"></script>
-		<script src="../js/printing.js"></script>
+		<script src="../js/graphing.js"></script>
 		<script>if (window.module) module = window.module;</script>
 	</body>
 </html>
