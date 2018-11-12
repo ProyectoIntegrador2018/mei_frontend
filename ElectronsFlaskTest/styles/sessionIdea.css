@@ -1,0 +1,20 @@
+.btnadd {
+    background-color: #007BFF; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    font-size: 2.0em; /* Set a font size */
+    border-radius: 30px;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    margin-left: 15px;
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btnadd:active {
+	background-color:#0069D9;
+}
+
+#otherOption{
+	margin-top: 10px;
+}

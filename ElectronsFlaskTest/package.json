@@ -10,5 +10,9 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^2.0.8"
+  },
+  "dependencies": {
+    "interactjs": "^1.3.4",
+    "orgchart": "^2.1.2"
   }
 }

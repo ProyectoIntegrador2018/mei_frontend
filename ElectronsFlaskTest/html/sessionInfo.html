@@ -12,27 +12,22 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-dark bg-primary">
-  			<button id="back" type="button" class="btn btn-primary">Back</button>
-				<h2 class = "text-white"> Session information </h2>
+			<button id="back" type="button" class="btn btn-primary">Back</button>
+			<h2 class = "text-white"> Session information </h2>
 			<button id="editSession" type="button" class="btn btn-primary">Edit Session</button>
 		</nav>
-
 		<div class="container" style="font-family: 'Roboto', sans-serif;">
 			<div class="row">
 				<div class="col-md-12">
 					<form class="mt-2">
 						<label for="inputSessionNameEdit">Name</label> <span id="titleErrorMessage" style="color: red"></span>
 						<input type="text" id="inputSessionNameEdit" class="form-control shadow-sm mb-2" placeholder="Name" required disabled="disabled">
-
 						<label for="inputSummaryEdit">Summary</label> <span id="summaryErrorMessage" style="color: red"></span>
 						<input type="text" id="inputSummaryEdit" class="form-control shadow-sm mb-2" placeholder="Summary" required disabled="disabled">
-
 						<label for="inputTriggeringQuestionEdit">Triggering Question</label> <span id="triggeringQuestionErrorMessage" style="color: red"></span>
 						<input type="text" id="inputTriggeringQuestionEdit" class="form-control shadow-sm mb-2" placeholder="Triggering Question" required disabled="disabled">
-
 						<label for="inputCreationDateEdit">Creation date</label> <span id="dateErrorMessage" style="color: red"></span>
 						<input type="date" id="inputCreationDateEdit" class="form-control shadow-sm mb-3" placeholder="Creation date" required disabled="disabled">
-
 						<div id="editButtons" style="display: none;">
 							<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="saveSessionChanges">Save changes</button>
 							<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="cancelSessionChanges">Cancel</button>
@@ -53,15 +48,20 @@
 						<label class="sr-only">Email</label>
 						<input type="text" id="inputParticipantEmail" class="form-control mt-2 shadow-sm" placeholder="Email" required>
 						<label class="sr-only">Role</label>
-						<input type="text" id="inputParticipantRole" class="form-control mt-2 shadow-sm" placeholder="Role" required>
+						<select class="form-control mt-2 shadow-sm" id="inputParticipantRole">
+							<option value="" selected disabled hidden>Role</option>
+						</select>
 						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="create_participant">Add</button>
 						<ul id="participantErrorMessage" class="mt-2 text-left">
 						</ul>
 					</form>
+					<h4>Or copy participants from another session</h4>
+					<select class="form-control" id="copySessionList">
+					</select>
+					<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="copy_participants">Copy</button>
 				</div>
 			</div>
 		</div>
-
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>

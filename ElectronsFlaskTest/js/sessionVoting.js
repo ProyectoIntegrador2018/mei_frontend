@@ -369,6 +369,7 @@ function saveIdeasOptions(ideas){
   for (var i = 0; i < ideasIDs.length ; i++) {
     ideaID = ideasIDs[i]
     ideaNumber = ideaSessionNumbers[i]
+    ideaNumber = ideaID - (firstID - 1)
     ideaText = ideasText[i]
     ideaOptionText = ideaNumber.toString() + " - " + ideaText
     console.log(ideaOptionText)
