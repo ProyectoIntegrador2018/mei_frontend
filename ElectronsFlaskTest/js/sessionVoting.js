@@ -7,6 +7,10 @@ $(document).ready(function(){
   $('#continue_structuring').click(function(e){
     saveForStructuring()
   })
+  $('#reset_votes').click(function(e){
+    reset_voting_details()
+    reset_votes()
+  })
 })
 
 function saveForStructuring(){
@@ -21,19 +25,74 @@ function saveForStructuring(){
 function setVotingState(state){
   console.log("setVotingState")
   if (state){
-    console.log("votation details found")
-    console.log(localStorage);
-    $("#CaptureVotingScheme").hide()
-    $("#CaptureVotes").show()
-    getSessionParticipantsVoting()
-    getParentIdeas("")
-    getIdeasVotingResults()
+    var votingScheme = localStorage.getItem("votingScheme")
+    if(votingScheme == "no_voting"){
+      $("#CaptureVotingScheme").hide()
+      $("#CaptureVotes").hide()
+      $("#NoVotes").show()
+    } else {
+      console.log("votation details found")
+      console.log(localStorage);
+      $("#CaptureVotingScheme").hide()
+      $("#CaptureVotes").show()
+      $("#NoVotes").hide()
+      getSessionParticipantsVoting()
+      getParentIdeas("")
+      getIdeasVotingResults()
+    }
+    $("#ResetVoting").show()
   } else {
     console.log("No previous votation details found")
     $("#CaptureVotingScheme").show()
     $("#CaptureVotes").hide()
+    $("#NoVotes").hide()
+    $("#ResetVoting").hide()
     updateVotingText()
   }
+}
+
+function reset_votes(){
+console.log("ResetVotes")
+$.ajax({
+  url : "http://127.0.0.1:5000/reset_votes",
+  type : "POST",
+  data : {
+    sessionID : localStorage.getItem("SessionId")
+  },
+  success : function (response) {
+    if (response['Success']) {
+      console.log("Votes deleted");
+    } else {
+      console.log("Call error");
+      console.log(response);
+    }
+  },
+  error : function (error) {
+    console.log("Error: " + error);
+  }
+});
+}
+
+function reset_voting_details(){
+console.log("ResetVotes")
+$.ajax({
+  url : "http://127.0.0.1:5000/reset_voting_details",
+  type : "POST",
+  data : {
+    sessionID : localStorage.getItem("SessionId")
+  },
+  success : function (response) {
+    if (response['Success']) {
+      console.log("Voting Details deleted");
+    } else {
+      console.log("Call error");
+      console.log(response);
+    }
+  },
+  error : function (error) {
+    console.log("Error: " + error);
+  }
+});
 }
 
 function setVotingText(){
@@ -149,7 +208,18 @@ function getIdeasVoting(){
   });
 }
 
+function getIdeaText(id){
+  var ideasIDs = localStorage.getItem("ideasIDs").split(',')
+  var ideasText = localStorage.getItem("ideasText").split(',')
+  for (var i = 0; i < ideasIDs.length ; i++) {
+    if (ideasIDs[i] == id){
+      return ideasText[i]
+    }
+  }
+}
+
 function getIdeasVotingResults(){
+  firstID = localStorage.getItem("firstID")
   $.ajax({
     url : "http://127.0.0.1:5000/get_voting_results",
     type : "POST",
@@ -162,7 +232,8 @@ function getIdeasVotingResults(){
       if (response['Success']) {
         response['votes'].forEach(function (result){
           console.log(result)
-          addIdeaCardVotingResult(result)
+          id = result-(firstID-1)
+          addIdeaCardVotingResult(id,getIdeaText(result))
         })
       }
     },
@@ -237,12 +308,11 @@ function addIdeaCardVotingPriority(id,ideasOptions){
   $("#ideasSectionVoting").append(ideaCard)
 }
 
-function addIdeaCardVotingResult(id){
-  firstID = localStorage.getItem("firstID")
+function addIdeaCardVotingResult(id,ideaText){
   var ideaCard = `
-    <div id="ideaCardVoting" class="card" style="width: 3rem;"">
+    <div id="ideaCardVoting" class="card" style="width: 10rem;"">
           <div class="row-4" style = "padding-left: 10px;">
-            ${id-(firstID-1)}    <input type="checkbox" name="ideasToStructure" value="${id-(firstID-1)}" checked>
+            ${id} - ${ideaText}   <input type="checkbox" name="ideasToStructure" value="${id}" checked>
           </div>
     </div>`
   $("#ideasSectionResults").append(ideaCard)
