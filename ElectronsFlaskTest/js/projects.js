@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 var USER_ID = null
 
 $(document).ready(function(){
@@ -25,7 +27,7 @@ $("#create_project").click(function(e){
 
 function createProject (name, org, creationDate, context, owner){
     $.ajax({
-        url : "http://127.0.0.1:5000/create_project",
+        url : server.server_url + "/create_project",
         type : "POST",
         data : {
             name : name,
@@ -68,7 +70,7 @@ function getSessions(id){
 
 function getSessionInfo(){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/get_session_info",
+	  url : server.server_url + "/get_session_info",
 	  type : "POST",
 	  data : {
 	  	session_key : 'email'
@@ -88,7 +90,7 @@ function getSessionInfo(){
 
 function getUserProjects(userID){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/get_user_projects",
+	  url : server.server_url + "/get_user_projects",
 	  type : "POST",
 	  data : {
 	  	userID : userID

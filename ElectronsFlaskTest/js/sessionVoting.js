@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 $(document).ready(function(){
   $('#save_voting_details').click(function(e){
     e.preventDefault()
@@ -61,7 +63,7 @@ function getIdeasVotingResults(){
     dict[ideasIDs[i]] = [ideaSessionNumbers[i],ideasText[i]]
   }
   $.ajax({
-    url : "http://127.0.0.1:5000/get_voting_results",
+    url : server.server_url + "/get_voting_results",
     type : "POST",
     data : {
       votingScheme : localStorage.getItem("votingScheme"),
@@ -86,7 +88,7 @@ function getIdeasVotingResults(){
 function reset_votes(){
 console.log("ResetVotes")
 $.ajax({
-  url : "http://127.0.0.1:5000/reset_votes",
+  url : server.server_url + "/reset_votes",
   type : "POST",
   data : {
     sessionID : localStorage.getItem("SessionId")
@@ -108,7 +110,7 @@ $.ajax({
 function reset_voting_details(){
 console.log("ResetVotes")
 $.ajax({
-  url : "http://127.0.0.1:5000/reset_voting_details",
+  url : server.server_url + "/reset_voting_details",
   type : "POST",
   data : {
     sessionID : localStorage.getItem("SessionId")
@@ -140,7 +142,7 @@ function updateVotingText(){
   console.log("UpdateVotingText")
 
   $.ajax({
-    url : "http://127.0.0.1:5000/getNumberOfParentIdeas",
+    url : server.server_url + "/getNumberOfParentIdeas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -165,7 +167,7 @@ function updateVotingText(){
 function getVotingDetails(){
   console.log("getVotingDetails")
   $.ajax({
-    url : "http://127.0.0.1:5000/get_voting_details",
+    url : server.server_url + "/get_voting_details",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -196,7 +198,7 @@ function setVotingDetails(){
 
   if (votingScheme != null){
     $.ajax({
-      url : "http://127.0.0.1:5000/set_voting_details",
+      url : server.server_url + "/set_voting_details",
       type : "POST",
       data : {
         sessionID : localStorage.getItem("SessionId"),
@@ -223,7 +225,7 @@ function setVotingDetails(){
 
 function getIdeasVoting(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_voting_ideas",
+    url : server.server_url + "/get_voting_ideas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -242,7 +244,7 @@ function getIdeasVoting(){
 
 function getSessionParticipantsVoting(){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_session_participants",
+		url : server.server_url + "/get_session_participants",
 		type : "POST",
 		data : {
 			sessionID : localStorage.getItem("SessionId")
@@ -338,7 +340,7 @@ function showVotingOptions(){
 function getParentIdeas(order){
   console.log("getParentIdeas");
   $.ajax({
-    url : "http://127.0.0.1:5000/get_parent_ideas",
+    url : server.server_url + "/get_parent_ideas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId"),
@@ -421,7 +423,7 @@ $("#save_vote").click(function(e){
 
   for(i=0; i<votes.length; i++){
     $.ajax({
-        url : "http://127.0.0.1:5000/save_vote",
+        url : server.server_url + "/save_vote",
         type : "POST",
         data : {vote : i+1,
                 ideaID: votes[i],

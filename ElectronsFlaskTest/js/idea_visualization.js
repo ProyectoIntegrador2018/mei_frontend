@@ -1,3 +1,4 @@
+const server = require('../js/main')
 
 let ideas = {}
 
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
 function sessionHasStructure(){
   $.ajax({
-    url : "http://127.0.0.1:5000/session_has_structure",
+    url : server.server_url + "/session_has_structure",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -60,7 +61,7 @@ function sessionHasStructure(){
 
 function getSessionIdeas(){
   $.ajax({
-	url : "http://127.0.0.1:5000/get_all_session_ideas",
+	url : server.server_url + "/get_all_session_ideas",
 	type : "POST",
 	data : {
 	  sessionID : SESSION_ID,
@@ -84,7 +85,7 @@ function getSessionIdeas(){
 function getMatrixValue(sessionID) {
   $.ajax({
 	async:false,
-	url : "http://127.0.0.1:5000/get_structure_matrix",
+	url : server.server_url + "/get_structure_matrix",
 	type : "POST",
 	data : {
 	  sessionID : sessionID,
@@ -121,7 +122,7 @@ function getSessionStructureMatrix(sessionID) {
   var multiple_items =[]
   $.ajax({
   async:false,
-  url : "http://127.0.0.1:5000/get_session_structure",
+  url : server.server_url + "/get_session_structure",
   type : "POST",
   data : {
 	sessionID : sessionID,

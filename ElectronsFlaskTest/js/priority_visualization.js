@@ -1,3 +1,4 @@
+const server = require('../js/main')
 
 let ideas = {}
 
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
 function sessionHasPriority() {
 	$.ajax({
-	url : "http://127.0.0.1:5000/session_has_priority",
+	url : server.server_url + "/session_has_priority",
 	type : "POST",
 	data : {
 	  sessionID : SESSION_ID,
@@ -60,7 +61,7 @@ function sessionHasPriority() {
 
 function getSessionIdeas(){
   $.ajax({
-	url : "http://127.0.0.1:5000/get_all_session_ideas",
+	url : server.server_url + "/get_all_session_ideas",
 	type : "POST",
 	data : {
 	  sessionID : SESSION_ID,
@@ -83,7 +84,7 @@ function getSessionIdeas(){
 
 function getSessionPriority(sessionID) {
   $.ajax({
-	  url : "http://127.0.0.1:5000/get_session_priority",
+	  url : server.server_url + "/get_session_priority",
 	  type : "POST",
 	  data : {
 		sessionID : sessionID,

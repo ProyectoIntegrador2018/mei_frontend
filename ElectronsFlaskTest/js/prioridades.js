@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 let ideas = []
 
 let question = {
@@ -18,12 +20,12 @@ let priorities = []
 let questionsAsked = []
 
 $(document).ready(function(){
-	getIdeas()
+	sessionHasPriority()
 })
 
 function deleteSessionPriorities() {
 	$.ajax({
-	  url : "http://127.0.0.1:5000/delete_session_priorities",
+	  url : server.server_url + "/delete_session_priorities",
 	  type : "POST",
 	  data : {
 	    sessionID : localStorage.getItem("SessionId")
@@ -39,12 +41,42 @@ function deleteSessionPriorities() {
 	});
 }
 
+function sessionHasPriority() {
+  $.ajax({
+  url : server.server_url + "/session_has_priority",
+  type : "POST",
+  data : {
+    sessionID : localStorage.getItem("SessionId"),
+  },
+  success : function (response) {
+    if (response['Success']){
+      if (response['hasPriority']){
+        var shouldDelete = confirm("This session already has a priority structure. Click OK to overwrite it or close this dialog to view the structure.")
+        if (shouldDelete) {
+          deleteSessionPriorities()
+        }
+        else{
+          console.log("Show general structureeeeee")
+          window.location.replace("priority_visualization.html")
+        }
+      }
+      else{
+        getIdeas()
+      }
+    }
+  },
+  error : function (error) {
+    console.log("Error: " + error);
+  }
+  });
+}
+
 function getIdeas(){
   ideasToStructure = localStorage.getItem("ideasToStructure")
   console.log(ideasToStructure)
   if(ideasToStructure != null){
     $.ajax({
-      url : "http://127.0.0.1:5000/get_all_session_ideas_in",
+      url : server.server_url + "/get_all_session_ideas_in",
       type : "POST",
       data : {
         sessionID : localStorage.getItem("SessionId"),
@@ -139,7 +171,12 @@ $("#higher").click(function() {
     }
 
     if (index == priorities.length - 1) {
-      priorities[index - 1].push(secondElementID)
+      if (index > 0) {
+        priorities[index - 1].push(secondElementID)
+      }
+      else{
+        priorities.splice(index + 1, 0, [secondElementID])
+      }
       getNextQuestion()
     }
     else{
@@ -315,7 +352,7 @@ function getNextQuestion() {
 
 function savePriorities(){
 	$.ajax({
-		url : "http://127.0.0.1:5000/save_priorities",
+		url : server.server_url + "/save_priorities",
 		type : "POST",
 		data : JSON.stringify({
 			sessionID: localStorage.getItem("SessionId"),

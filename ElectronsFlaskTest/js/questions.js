@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 let ideas = []
 let question = {
   'firstElement': -1,
@@ -12,7 +14,7 @@ $(document).ready(function(){
 
 function getIdeaTypeQuestion(ideaType){
   $.ajax({
-    url : "http://127.0.0.1:5000/ideatype_question",
+    url : server.server_url + "/ideatype_question",
     type : "POST",
     data : {
       ideaType : ideaType
@@ -30,7 +32,7 @@ function getIdeaTypeQuestion(ideaType){
 
 function hasStructure(){
   $.ajax({
-    url : "http://127.0.0.1:5000/session_has_structure",
+    url : server.server_url + "/session_has_structure",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -44,6 +46,7 @@ function hasStructure(){
           }
           else{
             console.log("Show general structureeeeee")
+            window.location.replace("idea_visualization.html")
           }
         }
         else {
@@ -59,7 +62,7 @@ function hasStructure(){
 
 function deleteGeneralStructureAndMatrix() {
   $.ajax({
-    url : "http://127.0.0.1:5000/delete_structure_matrix",
+    url : server.server_url + "/delete_structure_matrix",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -77,7 +80,7 @@ function deleteGeneralStructureAndMatrix() {
 
 function startGeneralStructure(amountIdeas){
   $.ajax({
-    url : "http://127.0.0.1:5000/start_general_structure",
+    url : server.server_url + "/start_general_structure",
     type : "POST",
     data : JSON.stringify({
       sessionID : localStorage.getItem("SessionId"),
@@ -100,7 +103,7 @@ function getIdeas(){
 
   if(ideasToStructure != null){
     $.ajax({
-      url : "http://127.0.0.1:5000/get_all_session_ideas_in",
+      url : server.server_url + "/get_all_session_ideas_in",
       type : "POST",
       data : {
         sessionID : localStorage.getItem("SessionId"),
@@ -146,7 +149,7 @@ function getIdeas(){
 
 function answerQuestion(answer) {
   $.ajax({
-    url : "http://127.0.0.1:5000/answer_question",
+    url : server.server_url + "/answer_question",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId"),
@@ -158,7 +161,7 @@ function answerQuestion(answer) {
       if (response['finished']) {
         console.log(response['levels'])
         $.ajax({
-          url : "http://127.0.0.1:5000/save_matrix_structure",
+          url : server.server_url + "/save_matrix_structure",
           type : "POST",
           data : {
             sessionID : localStorage.getItem("SessionId"),
@@ -166,7 +169,7 @@ function answerQuestion(answer) {
           success : function (response) {
             console.log(questionWithVotes)
             $.ajax({
-              url : "http://127.0.0.1:5000/save_votes",
+              url : server.server_url + "/save_votes",
               type : "POST",
               contentType : "application/json",
               data : JSON.stringify({
@@ -199,7 +202,7 @@ function answerQuestion(answer) {
 
 function getNextQuestion(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_next_question",
+    url : server.server_url + "/get_next_question",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")

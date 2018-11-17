@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 var sessionID = localStorage.getItem("SessionId")
 var participantEmail = localStorage.getItem("participantIDtoEdit")
 var participantName = null
@@ -66,7 +68,7 @@ $("#saveParticipantChanges").click(function(e){
 		console.log(participantEmail)
 		console.log(newParticipantEmail)
 		$.ajax({
-			url : "http://127.0.0.1:5000/edit_participant",
+			url : server.server_url + "/edit_participant",
 			type : "POST",
 			data : {
 				name: newParticipantName,
@@ -102,7 +104,7 @@ $("#editParticipant").click(function(e){
 
 function getParticipantInformation(){
 	$.ajax({
-	    url : "http://127.0.0.1:5000/get_participant_information",
+	    url : server.server_url + "/get_participant_information",
 		type : "POST",
 		data : {
 			sessionID : sessionID,

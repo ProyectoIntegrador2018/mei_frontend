@@ -1,3 +1,4 @@
+const server = require('../js/main')
 const interact = require('interactjs');
 
 // Hold clarifications before editing for when the user clicks Cancel and we can revert the TextArea value
@@ -74,7 +75,7 @@ function saveClarification(ideaID){
   var clarification = $("#clarification-" + ideaID).val()
   if (clarification !== ""){ // Check for only whitespaces????
     $.ajax({
-      url : "http://127.0.0.01:5000/update_clarification",
+      url : server.server_url + "/update_clarification",
       type : "POST",
       data : {
         ideaID : ideaID,
@@ -89,7 +90,7 @@ function saveClarification(ideaID){
 
 $(document).ready(function(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_session_ideas",
+    url : server.server_url + "/get_session_ideas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -226,13 +227,14 @@ $("#saveIdeas").click(function() {
   var ideas = getIdeaHierarchy()
   console.log(ideas)
   $.ajax({
-    url: "http://127.0.0.1:5000/join_ideas",
+    url: server.server_url + "/join_ideas",
     type: "POST",
     data: {
       sessionID: localStorage.getItem("SessionId"),
       ideas: ideas
     },
     success: function(response){
+      console.log(response)
       if (response['Success']){
         window.location.replace("sessionIdeas.html")
       }
@@ -245,7 +247,7 @@ $("#saveIdeas").click(function() {
 
 function getTriggering(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_session_data",
+    url : server.server_url + "/get_session_data",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
