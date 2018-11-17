@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 //GLOBAL CONSTANTS
 IDEA_TYPE = ""
 
@@ -12,7 +14,7 @@ let beforeEdit = {}
 
 function getTriggering(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_session_data",
+    url : server.server_url + "/get_session_data",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -31,7 +33,7 @@ function getTriggering(){
 
 function getIdeas(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_all_session_ideas",
+    url : server.server_url + "/get_all_session_ideas",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -61,7 +63,7 @@ function getIdeas(){
 
 function addParticipants(){
   $.ajax({
-    url : "http://127.0.0.1:5000/get_session_participants",
+    url : server.server_url + "/get_session_participants",
     type : "POST",
     data : {
       sessionID : localStorage.getItem("SessionId")
@@ -169,7 +171,7 @@ function saveIdea(ideaID) {
   $("#edit-" + ideaID).css("display", "inline")
   $("#canceledit-" + ideaID).css("display", "none")
   $.ajax({
-    url : "http://127.0.0.1:5000/update_idea",
+    url : server.server_url + "/update_idea",
     type : "POST",
     data : {
       ideaID: ideaID,
@@ -197,7 +199,7 @@ $("#addIdeabtn").click(function() {
   if(IDEA_TYPE != "") {
     if (statement != ""){
       $.ajax({
-        url : "http://127.0.0.1:5000/create_element",
+        url : server.server_url + "/create_element",
         type : "POST",
         data : {
           idea : statement,

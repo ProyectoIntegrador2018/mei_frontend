@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 let categoryNames = {}
 let focusedCategoryNameID = null
 let focusOutFromMousedown = false
@@ -42,7 +44,7 @@ function updateCategoryName(categoryID) {
 	focusOutFromMousedown = true
 	let newCategoryName = $("#" + categoryID).text()
 	$.ajax({
-	  url : "http://127.0.0.1:5000/update_category_name",
+	  url : server.server_url + "/update_category_name",
 	  type : "POST",
 	  data : {
 	    categoryID : categoryID,
@@ -77,7 +79,7 @@ function exitFocus(categoryNameID) {
 
 function getSessionCategories() {
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_session_ideas_in_categories",
+		url : server.server_url + "/get_session_ideas_in_categories",
 		type : "POST",
 		data : {
 			sessionID: localStorage.getItem("SessionId"),

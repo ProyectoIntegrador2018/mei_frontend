@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 PROJECT_ID = localStorage.getItem("id")
 
 $(document).ready(function(){
@@ -6,7 +8,7 @@ $(document).ready(function(){
 
 function getProjectSessions(projectID){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/get_project_sessions",
+	  url : server.server_url + "/get_project_sessions",
 	  type : "POST",
 	  data : {
 	  	projectID : projectID
@@ -93,7 +95,7 @@ function createSession (name,summary, triggeringQuestion, date){
 	else{
 		$("#errorMessage").html("")
 		$.ajax({
-		    url : "http://127.0.0.1:5000/create_session",
+		    url : server.server_url + "/create_session",
 		    type : "POST",
 		    data : {
 		        name : name,

@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 SESSION_ID = localStorage.getItem("id")
 
 $(document).ready(function(){
@@ -6,7 +8,7 @@ $(document).ready(function(){
 
 function getTriggering(sessionID){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_session_data",
+		url : server.server_url + "/get_session_data",
 		type : "POST",
 		data : {
 			sessionID : localStorage.getItem("SessionId")
@@ -35,7 +37,7 @@ function getSessionCard(id,triggeringQuestion){
 }
 function getSessionIdeas(projectID){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/get_project_sessions",
+	  url : server.server_url + "/get_project_sessions",
 	  type : "POST",
 	  data : {
 	  	projectID : projectID

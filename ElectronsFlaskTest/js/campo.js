@@ -1,4 +1,5 @@
 const interact = require('interactjs');
+const server = require('../js/main')
 
 let ideas = []
 let ideaIDCategory = {}
@@ -14,7 +15,7 @@ $(document).ready(function(){
 
 function sessionHasCategories(){
 	$.ajax({
-	  url : "http://127.0.0.1:5000/session_has_categories",
+	  url : server.server_url + "/session_has_categories",
 	  type : "POST",
 	  data : {
 	    sessionID : localStorage.getItem("SessionId")
@@ -45,7 +46,7 @@ function sessionHasCategories(){
 
 function deleteSessionCategories() {
 	$.ajax({
-	  url : "http://127.0.0.1:5000/delete_session_categories",
+	  url : server.server_url + "/delete_session_categories",
 	  type : "POST",
 	  data : {
 	    sessionID : localStorage.getItem("SessionId")
@@ -112,7 +113,7 @@ function getIdeas(){
 
   if(ideasToStructure != null){
     $.ajax({
-      url : "http://127.0.0.1:5000/get_all_session_ideas_in",
+      url : server.server_url + "/get_all_session_ideas_in",
       type : "POST",
       data : {
         sessionID : localStorage.getItem("SessionId"),
@@ -267,7 +268,7 @@ function saveCategories(){
 	}
 
 	$.ajax({
-		url : "http://127.0.0.1:5000/save_categories",
+		url : server.server_url + "/save_categories",
 		type : "POST",
 		data : JSON.stringify({
 			sessionID: localStorage.getItem("SessionId"),

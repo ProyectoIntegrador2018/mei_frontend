@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 var projectID = null
 var projectTitle = null
 var projectOrganization = null
@@ -76,7 +78,7 @@ $("#saveProjectChanges").click(function(e){
 	var error = checkEditFieldSessionErrors(newProjectTitle, newProjectOrganization, newProjectDate, newProjectContext)
 	if (!error){
 		$.ajax({
-			url : "http://127.0.0.1:5000/edit_project",
+			url : server.server_url + "/edit_project",
 			type : "POST",
 			data : {
 				name: newProjectTitle,
@@ -113,7 +115,7 @@ $("#editProject").click(function(e){
 
 function getProjectInformation(){
 	$.ajax({
-	    url : "http://127.0.0.1:5000/get_project_info",
+	    url : server.server_url + "/get_project_info",
 		type : "POST",
 		data : {
 			projectID : localStorage.getItem("projectID")

@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 PROJECT_ID = localStorage.getItem("id")
 
 var sessionID = localStorage.getItem("SessionId")
@@ -45,7 +47,7 @@ function checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newTrig
 
 function getProjectSessions(projectID){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_project_sessions",
+		url : server.server_url + "/get_project_sessions",
 		type : "POST",
 		data : {
 			projectID : projectID
@@ -95,7 +97,7 @@ $("#copy_participants").click(function(e){
 	var sessionTo = sessionID
 
 	$.ajax({
-		url : "http://127.0.0.1:5000/copy_session_participants",
+		url : server.server_url + "/copy_session_participants",
 		type : "POST",
 		data : {
 			sessionID : sessionTo,
@@ -148,7 +150,7 @@ $("#saveSessionChanges").click(function(e){
 	var error = checkEditFieldSessionErrors(newSessionTitle, newSessionSummary, newTriggeringQuestion, newCreationDate);
 	if (!error){
 		$.ajax({
-			url : "http://127.0.0.1:5000/edit_session",
+			url : server.server_url + "/edit_session",
 			type : "POST",
 			data : {
 				name: newSessionTitle,
@@ -185,7 +187,7 @@ $("#editSession").click(function(e){
 
 function getSessionInformation(){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_session_data",
+		url : server.server_url + "/get_session_data",
 		type : "POST",
 		data : {
 			sessionID : localStorage.getItem("SessionId")
@@ -207,7 +209,7 @@ function getSessionInformation(){
 
 function getParticipantTypes(){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_participant_types",
+		url : server.server_url + "/get_participant_types",
 		type : "POST",
 		success : function (response) {
 			if (response['Success']){
@@ -227,7 +229,7 @@ function getParticipantTypes(){
 
 function getSessionParticipants(sessionID){
 	$.ajax({
-		url : "http://127.0.0.1:5000/get_session_participants",
+		url : server.server_url + "/get_session_participants",
 		type : "POST",
 		data : {
 			sessionID : sessionID
@@ -270,7 +272,7 @@ function createParticipant (name,email, role){
 	else{
 		$("#participantErrorMessage").html("")
 		$.ajax({
-			url : "http://127.0.0.1:5000/create_participant",
+			url : server.server_url + "/create_participant",
 			type : "POST",
 				data : {
 				name : name,
@@ -293,7 +295,7 @@ function createParticipant (name,email, role){
 function deleteParticipant(email) {
 	console.log(email)
 	$.ajax({
-		url : "http://127.0.0.1:5000/delete_participant",
+		url : server.server_url + "/delete_participant",
 		type : "POST",
 		data : {
 			email : email,

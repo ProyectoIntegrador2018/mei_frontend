@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 $("#login_user").click(function(e){
   e.preventDefault()
   var errorMessage = ""
@@ -15,7 +17,7 @@ $("#login_user").click(function(e){
 
   if (errorMessage == ""){
     $.ajax({
-      url : "http://127.0.0.1:5000/login_user",
+      url : server.server_url + "/login_user",
       type : "POST",
       data : {
         email : email,

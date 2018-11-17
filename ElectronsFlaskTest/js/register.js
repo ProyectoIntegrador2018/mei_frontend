@@ -1,3 +1,5 @@
+const server = require('../js/main')
+
 $("#register_user").click(function(e){
   e.preventDefault()
 
@@ -30,7 +32,7 @@ $("#register_user").click(function(e){
 
   if (errorMessage == ""){
     $.ajax({
-      url : "http://127.0.0.1:5000/create_user",
+      url : server.server_url + "/create_user",
       type : "POST",
       data : {
         email : email,
