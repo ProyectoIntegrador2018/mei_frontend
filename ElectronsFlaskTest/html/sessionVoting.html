@@ -23,7 +23,7 @@
 					<a class="nav-link" href="sessionIdeas.html">Element compression</a>
 				</li>
 				<li class="nav-item active">
-			    <a class="nav-link" href="sessionVoting.html">Voting</a>
+					<a class="nav-link" href="sessionVoting.html">Voting</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href="questions.html">General structure</a>
@@ -47,63 +47,55 @@
 		</nav>
 		<div id="CaptureVotingScheme" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
 			<div class="row">
-        <form class="form-signin">
-          <h3>Select Voting Scheme: </h3>
-
-          <select class="form-control mt-2 shadow-sm" id="inputVotingScheme" onchange="showVotingOptions()">
+				<form class="form-signin">
+					<h3>Select Voting Scheme: </h3>
+					<select class="form-control mt-2 shadow-sm" id="inputVotingScheme" onchange="showVotingOptions()">
 						<option value="no_voting">No voting required</option>
 						<option value="top_x">Vote for X Top ideas</option>
 						<option value="x_ideas">Vote for X% of ideas</option>
-          </select> <br>
-
+					</select> <br>
 					<div id="votingOptions" style="display: none">
 						<input id="x_ideas" type="number" name="ideas" value=1 min="1" onchange="setVotingText()"><p id="votingText">/10 = 0%</p><br>
 					</div>
-
-          <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_voting_details">Continue</button>
-        </form>
+					<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_voting_details">Continue</button>
+				</form>
 			</div>
-
 		</div>
-		<button id='print-pdf'>Print</button>	
-		<div id="CaptureVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
+		<button id='print-pdf'>Print</button>
+		<div id="CaptureVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; width: 100%; overflow-y: scroll; display: none">
 			<div class="row">
 				<div>
 					<div class="col-4" id="ideasSectionResults">
-          	<h3>Ideas to Structure</h3>
-
-        	</div>
-					<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="continue_structuring">Save Ideas</button>
-				</div>
-
-				<div class="col-6" id="ideasSectionVoting">
-          <h3>Session Ideas</h3>
-		  
-        </div>
-
-				<div class="col-3">
-          <form class="form-signin">
-            <h3>Select Participant: </h3>
-            <select class="form-control mt-2 shadow-sm" id="inputParticipantNameVoting">
-              <option value="" selected disabled hidden>Participant</option>
-            </select>
-            <button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_vote">Save votes</button>
-          </form>
-				</div>
-				<div id="ResetVoting" class="container" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; display: none">
-					<div class="row">
-		      	<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="reset_votes">Reset Voting</button>
+						<h3>Ideas to Structure</h3>
 					</div>
+					<button class="btn btn-lg btn-primary btn-block mt-2" data-toggle="modal" data-target="#ideasSavedForStructure" id="continue_structuring">Save ideas</button>
+				</div>
+				<div class="col-6" id="ideasSectionVoting">
+					<h3>Session Ideas</h3>
+					
+				</div>
+				<div class="col-3">
+					<form class="form-signin">
+						<h3>Select Participant: </h3>
+						<select class="form-control mt-2 shadow-sm" id="inputParticipantNameVoting">
+							<option value="" selected disabled hidden>Participant</option>
+						</select>
+						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="save_vote">Save votes</button>
+						<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="reset_votes">Reset voting</button>
+					</form>
 				</div>
 			</div>
 		</div>
-
-		<div id="NoVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; height: 90vh; width: 100%; overflow-y: scroll; display: none">
+		<div id="NoVotes" class="container-fluid" style="font-family: 'Roboto', sans-serif; width: 100%; overflow-y: scroll; display: none">
 			<div class="row">
-      	<h3>No voting selected on this session :)</h3>
+				<h3>No voting selected on this session</h3>
 			</div>
 		</div>
-
+		<div id="ResetVoting" class="container" style="font-family: 'Roboto', sans-serif; width: 100%; display: none">
+			<div class="row">
+				<button class="btn btn-lg btn-primary btn-block mt-2" type="submit" id="reset_votes2">Reset voting</button>
+			</div>
+		</div>
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 		<script src="../js/jquery.js"></script>

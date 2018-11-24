@@ -13,6 +13,10 @@ $(document).ready(function(){
     reset_voting_details()
     reset_votes()
   })
+  $('#reset_votes2').click(function(e){
+    reset_voting_details()
+    reset_votes()
+  })
 })
 
 function saveForStructuring(){
@@ -22,27 +26,31 @@ function saveForStructuring(){
   console.log(checkedValues)
 
   localStorage.setItem("ideasToStructure",checkedValues)
+  alert("Ideas saved for structuring")
 }
 
 function setVotingState(state){
   console.log("setVotingState")
+  console.log(state)
   if (state){
     var votingScheme = localStorage.getItem("votingScheme")
     if(votingScheme == "no_voting"){
       $("#CaptureVotingScheme").hide()
       $("#CaptureVotes").hide()
       $("#NoVotes").show()
+      $("#ResetVoting").show()
+      console.log("caca")
     } else {
       console.log("votation details found")
       console.log(localStorage);
       $("#CaptureVotingScheme").hide()
       $("#CaptureVotes").show()
       $("#NoVotes").hide()
+      $("#ResetVoting").hide()
       getSessionParticipantsVoting()
       getParentIdeas("")
       getIdeasVotingResults()
     }
-    $("#ResetVoting").show()
   } else {
     console.log("No previous votation details found")
     $("#CaptureVotingScheme").show()
@@ -96,6 +104,7 @@ $.ajax({
   success : function (response) {
     if (response['Success']) {
       console.log("Votes deleted");
+      window.location.replace("sessionVoting.html")
     } else {
       console.log("Call error");
       console.log(response);
@@ -421,20 +430,20 @@ $("#save_vote").click(function(e){
   var member = $("#inputParticipantNameVoting").val()
   var sessionID = localStorage.getItem("SessionId")
 
-  for(i=0; i<votes.length; i++){
-    $.ajax({
-        url : server.server_url + "/save_vote",
-        type : "POST",
-        data : {vote : i+1,
-                ideaID: votes[i],
-                member: member,
-                sessionID: sessionID},
-        success : function (response) {
-            console.log(response)
-        },
-        error : function (error) {
-            console.log("Error: " + error);
-        }
-    });
-  }
+
+  $.ajax({
+      url : server.server_url + "/save_vote",
+      type : "POST",
+      data : JSON.stringify({
+              votes: votes,
+              member: member,
+              sessionID: sessionID}),
+      contentType : "application/json",
+      success : function (response) {
+          console.log(response)
+      },
+      error : function (error) {
+          console.log("Error: " + error);
+      }
+  });
 })
