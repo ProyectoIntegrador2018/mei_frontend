@@ -19,6 +19,12 @@ $(document).ready(function(){
   })
 })
 
+function saveAllForStructuring(){
+  var ids = localStorage.getItem("ideasIDs").split(',')
+  console.log(ids)
+  localStorage.setItem("ideasToStructure",ids)
+}
+
 function saveForStructuring(){
   var checkedValues = $('input[name ="ideasToStructure"]:checked').map(function() {
     return Number(this.value);
@@ -40,6 +46,7 @@ function setVotingState(state){
       $("#NoVotes").show()
       $("#ResetVoting").show()
       console.log("caca")
+      getParentIdeas("",false)
     } else {
       console.log("votation details found")
       console.log(localStorage);
@@ -48,7 +55,7 @@ function setVotingState(state){
       $("#NoVotes").hide()
       $("#ResetVoting").hide()
       getSessionParticipantsVoting()
-      getParentIdeas("")
+      getParentIdeas("",true)
       getIdeasVotingResults()
     }
   } else {
@@ -346,7 +353,7 @@ function showVotingOptions(){
   }
 }
 
-function getParentIdeas(order){
+function getParentIdeas(order,saveIdeas){
   console.log("getParentIdeas");
   $.ajax({
     url : server.server_url + "/get_parent_ideas",
@@ -364,7 +371,11 @@ function getParentIdeas(order){
           localStorage.setItem("ideaSessionNumbers",response['ideaSessionNumbers'])
         }
       }
-      saveIdeasOptions()
+      if(saveIdeas){
+        saveIdeasOptions()
+      } else {
+        saveAllForStructuring()
+      }
     },
     error : function (error) {
       console.log("Error: " + error);
