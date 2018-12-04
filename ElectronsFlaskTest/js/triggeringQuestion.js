@@ -4,7 +4,6 @@ const server = require('../js/main')
 IDEA_TYPE = ""
 
 $(document).ready(function(){
-  //TODO: NO SIEMPRE SE LOADEA EL CONTENIDO
   getTriggering()
   getIdeas()
   addParticipants()

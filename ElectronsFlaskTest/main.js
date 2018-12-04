@@ -54,13 +54,10 @@ const {app, BrowserWindow} = require('electron')
   
   // En este archivo puedes incluir el resto del código del proceso principal de
   // tu aplicación. También puedes ponerlos en archivos separados y requerirlos aquí.
-  ipc.on('print-to-pdf', function(event) {
-
+  ipc.on('print-to-pdf', function(event) {  
     var basepath = app.getAppPath();
-
     const pdfPath = basepath + '/Print.pdf';
     const win = BrowserWindow.fromWebContents(event.sender);
-
     win.webContents.printToPDF({}, function(error, data) {
       if(error) return console.log(error.message)
 
