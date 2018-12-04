@@ -6,6 +6,7 @@ printPDFButton.addEventListener('click', function(event){
 });
 
 ipc.on('wrote-pdf', function(event, path){
-  const message = 'Wrote PDF to: ${path}';
+  const message = 'Wrote PDF to: '+ path;
+  console.log(message)
   document.getElementById('pdf-path').innerHTML = message;
 });
