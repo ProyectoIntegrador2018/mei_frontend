@@ -13,7 +13,7 @@ $ yarn add electron-builder --dev
 ## Quick setup
 
 1. Specify the usual fields in the `ElectronFlaskTest/package.json` (name, author, description and version)
-2. Add the `build` filed to the `package.json`
+2. Add the `build` field to the `package.json`
 ```bash
 "build": {
   "appId": "your.id",
