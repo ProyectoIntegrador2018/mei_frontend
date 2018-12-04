@@ -73,10 +73,12 @@ function addParticipants(){
         console.log(response.Members.length)
         var option = document.createElement("option");
         for(member in response.Members) {
-          var option = document.createElement("option");
-          option.text = response.Members[member].email;
-          option.value = response.Members[member].email;
-          $("#participantSelection").append(option)
+          if(response.Members[member].role == "Participant") {
+            var option = document.createElement("option");
+            option.text = response.Members[member].name;
+            option.value = response.Members[member].name;
+            $("#participantSelection").append(option)
+          }
         }
       }
     },
