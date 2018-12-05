@@ -1,16 +1,20 @@
 # MEI - Sistema Inteligente (Frontend)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/2eefa5b08073bb7d342c/maintainability)](https://codeclimate.com/github/ProyectoIntegrador2018/mei_frontend/maintainability)
+
 Desktop application to follow a process of collaborative teamwork and face-to-face dialogue following the Interpretative Structural Modeling algorithm by John Warfield.
 
 ## Table of contents
 
-* [Client Details](#client-details)
-* [Environment URLS](#environment-urls)
-* [Team](#team)
-* [Management tools](#management-tools)
-* [Requirements](#requirements)
-* [Setup the project](#setup-the-project)
-* [Running the Electron app](#running-the-electron-app)
+- [MEI - Sistema Inteligente (Frontend)](#mei---sistema-inteligente-frontend)
+  - [Table of contents](#table-of-contents)
+    - [Client Details](#client-details)
+    - [Environment URLS](#environment-urls)
+    - [Team](#team)
+    - [Management tools](#management-tools)
+    - [Requirements](#requirements)
+    - [Setup the project](#setup-the-project)
+    - [Running the Electron app](#running-the-electron-app)
 
 
 ### Client Details
