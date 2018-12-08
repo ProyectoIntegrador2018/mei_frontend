@@ -157,6 +157,18 @@ interact('.draggable').draggable({
         $(event.target).css("z-index", 1);
     },
 
+    onend: function (event) {
+      var draggableElement = event.target
+      // translate the element
+      draggableElement.style.webkitTransform =
+      draggableElement.style.transform =
+        'translate(' + 0 + 'px, ' + 0 + 'px)';
+
+        // update the position attributes
+      draggableElement.setAttribute('data-x', 0);
+      draggableElement.setAttribute('data-y', 0);
+    },
+
     // call this function on every dragmove event
     onmove: dragMoveListener,
 
