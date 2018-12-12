@@ -179,6 +179,7 @@ function answerQuestion(answer) {
               success : function (response) {
                 alert("Finished!")
                 console.log(response)
+                window.location.replace("idea_visualization.html")
               },
               error : function (error) {
                 console.log("Error: " + error);
@@ -232,6 +233,8 @@ $("#yes").click(function() {
   firstElementID = $("#firstElement>div").attr('id')
   secondElementID = $("#secondElement>div").attr('id')
   questionWithVotes.push({"firstElementID": firstElementID, "secondElementID": secondElementID, "yesVotes": yesVotes, "noVotes": noVotes})
+  $("#yes-votes").val(0)
+  $("#no-votes").val(0)
   answerQuestion(1)
 })
 
@@ -241,5 +244,7 @@ $("#no").click(function() {
   firstElementID = $("#firstElement>div").attr('id')
   secondElementID = $("#secondElement>div").attr('id')
   questionWithVotes.push({"firstElementID": firstElementID, "secondElementID": secondElementID, "yesVotes": yesVotes, "noVotes": noVotes})
+  $("#yes-votes").val(0)
+  $("#no-votes").val(0)
   answerQuestion(0)
 })

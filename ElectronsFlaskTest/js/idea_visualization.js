@@ -5,23 +5,20 @@ let ideas = {}
 SESSION_ID = localStorage.getItem("SessionId")
 
 function renderSquare(r, n) {
-  //console.log(r, n.label)
+  //console.log(r, n.label, n.tooltipText)
   /* the Raphael set is obligatory, containing all you want to display */
   var set = r.set().push(
 	  /* custom objects go here */
-	  r.rect(n.point[0], n.point[1], 1, 1).attr({"fill": "#007bff", "stroke-width": 2, "fill-opacity": 1, r : "9px"})).push
+	  r.rect(n.point[0], n.point[1], 1, 1).attr({"fill": "#ffffff", "stroke-width": 2, "fill-opacity": 1, r : "9px"})).push
 		(r.text(n.point[0], n.point[1], n.label).attr({"font-size":"14px"}));
 
-	  /*
 	  set.items.forEach(function(el) {
 		el.tooltip(
 		  r.set().push(
-			r.rect(0, 0, 30, 30).attr(
-			  {"fill": "#fec", "stroke-width": 1, r : "9px"})
-			)
+		  	r.text(5, 5, n.tooltipText).attr({"font-size":"14px"})
 		  )
+		)
 	  });
-	  */
 
   set[0].attr({width: set[1].getBBox()['width'] + 20, height: set[1].getBBox()['height'] + 20})
   set[1].attr({x: set[1].attrs['x'] + set[0].attrs['width']/2.0})
@@ -135,14 +132,20 @@ function getSessionStructureMatrix(sessionID) {
 	  ideasInLevel = structure_matrix[keys[i]]
 	  for (let ideaInLevel in ideasInLevel){
 		nodeLabel = ""
+		tooltipText = ""
 		let nodeID = String(ideas[ideasInLevel[ideaInLevel][0]]['ideaID'])
 		for (var j = 0; j < ideasInLevel[ideaInLevel].length; j++) {
 		  statement = ideas[ideasInLevel[ideaInLevel][j]]['idea']
+		  labelStatement = statement
 		  ideaSessionNumber = ideas[ideasInLevel[ideaInLevel][j]]['ideaSessionNumber']
-		  nodeLabel = nodeLabel + (ideaSessionNumber + " " + statement + "\n")
+		  if (labelStatement.length > 25) {
+		  	labelStatement = labelStatement.substring(0, 25) + "..."
+		  }
+		  nodeLabel = nodeLabel + (ideaSessionNumber + " " + labelStatement + "\n")
+		  tooltipText = tooltipText + (ideaSessionNumber + " " + statement + "\n")
 		}
 
-		g.addNode(nodeID, {label: nodeLabel, render: renderSquare})
+		g.addNode(nodeID, {label: nodeLabel, render: renderSquare, tooltipText: tooltipText})
 	  }
 	}
 	

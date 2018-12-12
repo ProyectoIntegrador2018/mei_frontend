@@ -142,7 +142,6 @@ function setNextQuestion(i, j) {
 }
 
 $("#higher").click(function() {
-
   higherVotes = parseInt($("#higher-votes").val())
   lowerVotes = parseInt($("#lower-votes").val())
   sameVotes = parseInt($("#same-votes").val())
@@ -213,6 +212,10 @@ $("#higher").click(function() {
       }
     }
   }
+
+  $("#higher-votes").val(0)
+  $("#lower-votes").val(0)
+  $("#same-votes").val(0)
 })
 
 $("#lower").click(function() {
@@ -280,6 +283,10 @@ $("#lower").click(function() {
       }
     }
   }
+
+  $("#higher-votes").val(0)
+  $("#lower-votes").val(0)
+  $("#same-votes").val(0)
 })
 
 $("#same").click(function() {
@@ -322,6 +329,10 @@ $("#same").click(function() {
       getNextQuestion()
     }
   }
+
+  $("#higher-votes").val(0)
+  $("#lower-votes").val(0)
+  $("#same-votes").val(0)
 })
 
 function getNextQuestion() {
