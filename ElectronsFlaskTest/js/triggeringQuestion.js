@@ -73,10 +73,12 @@ function addParticipants(){
         console.log(response.Members.length)
         var option = document.createElement("option");
         for(member in response.Members) {
-          var option = document.createElement("option");
-          option.text = response.Members[member].email;
-          option.value = response.Members[member].email;
-          $("#participantSelection").append(option)
+          if(response.Members[member].role == "Participant") {
+            var option = document.createElement("option");
+            option.text = response.Members[member].name;
+            option.value = response.Members[member].email;
+            $("#participantSelection").append(option)
+          }
         }
       }
     },
@@ -84,6 +86,33 @@ function addParticipants(){
       console.log("Error: " + error);
     }
   });
+}
+
+function getParticipants(email) {
+  var participantName
+  $.ajax({
+    async: false,
+    url : server.server_url + "/get_session_participants",
+    type : "POST",
+    data : {
+      sessionID : localStorage.getItem("SessionId")
+    },
+    success : function (response) { 
+      if (response['Success']){
+        for(member in response.Members) {
+          if(response.Members[member].email == email) {
+            participantName = response.Members[member].name;
+            console.log(participantName)
+          }
+        }
+      }
+    },
+    error : function (error) {
+      console.log("Error: " + error);
+    }
+  });
+  return participantName
+
 }
 
 function getSessionCard(id,triggeringQuestion){
@@ -120,18 +149,19 @@ function getIdeaTableRow(id, statement, clarification, participant, ideaNumber){
   if (clarification == "No clarification"){
     clarificationWarning = `class="table-warning"`
   }
+  var name = "Anonymous"
 
-  if (participant == null || participant == ""){
-    participant = "Anonymous"
+  if (participant != undefined && participant != null && participant != "" && participant != "Anonymous"){
+    //Get name participant
+    name = getParticipants(participant)  
   }
-
   var ideaRow = `
     <tr>
       <th scope="row">${ideaNumber}</th>
       <td><span class="badge badge-secondary">${IDEA_TYPE}</span></td>
       <td id="statement-${id}">${statement}</td>
       <td ${clarificationWarning}>${clarification}</td>
-      <td id="author-${id}">${participant}</td>
+      <td id="author-${id}">${name}</td>
       <td>
         <div id="edit-${id}">
           <button type="button" class="btn btn-primary btn-sm" onclick="editIdea('${id}')">Edit</button>

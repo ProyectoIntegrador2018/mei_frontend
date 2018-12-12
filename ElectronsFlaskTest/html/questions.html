@@ -11,12 +11,12 @@
 		<link href="../styles/projects.css" rel="stylesheet">
 		<link href="../styles/login.css" rel="stylesheet">
 	</head>
-	<body>
+	<body style="padding-top: 85px">
 		<div class="container-fluid" style="font-family: 'Roboto'">
 			<div class="row">
 			  <div class="col-md-12">
 			    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-			      <ul class="navbar-nav">
+			      <ul class="navbar-nav nav-fill">
 			        <li class="nav-item active">
 			          <a class="nav-link" href="session.html">Back</a>
 			        </li>
@@ -77,20 +77,20 @@
 						</div>
 					</div>
 				</div>
-				<div class="row mt-3">
-					<div class="col-md-9">
+				<div class="row mt-3 justify-content-center">
+					<div class="col 4 offset-md-3">
 						<button type="button" class="btn btn-primary btn-lg btn-block" id="yes">Yes</button>
 					</div>
-					<div class="col-md-3">
+					<div class="col 4  mt-2">
 						<label for="yes-votes">Number of votes:</label>
 						<input type="number" value="0" id="yes-votes" min="0">
 					</div>
 				</div>
 				<div class="row mt-3">
-					<div class="col-md-9">
-						<button type="button" class="btn btn-primary btn-lg btn-block" id="no">No</button>
+					<div class="col 4 offset-md-3">
+						<button type="button" class="btn btn-danger btn-lg btn-block" id="no">No</button>
 					</div>
-					<div class="col-md-3">
+					<div class="col 4 mt-2">
 						<label for="no-votes">Number of votes:</label>
 						<input type="number" value="0" id="no-votes" min="0">
 					</div>
@@ -101,7 +101,6 @@
 					<h1></h1>
 				</div>
 			</div>
-			<button id='print-pdf'>Print</button>
 		</div>
 		<!-- https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined -->
 		<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
