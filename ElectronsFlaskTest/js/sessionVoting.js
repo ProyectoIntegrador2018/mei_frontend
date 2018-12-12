@@ -149,7 +149,7 @@ function setVotingText(){
 console.log("setVotingText")
   parentIdeas = localStorage.getItem("parentIdeas")
   ideasToVote = $("#x_ideas").val()
-  percentage = (Number(ideasToVote)*100 / Number(parentIdeas)).toString() + '%'
+  percentage = (Number(ideasToVote)*100 / Number(parentIdeas)).toFixed(2).toString() + '%'
   console.log(document.getElementById('votingText').innerHTML)
   document.getElementById('votingText').innerHTML = '/'+parentIdeas+ ' = ' + percentage ;
 }
