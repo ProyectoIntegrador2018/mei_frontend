@@ -9,19 +9,16 @@ function renderSquare(r, n) {
   /* the Raphael set is obligatory, containing all you want to display */
   var set = r.set().push(
 	  /* custom objects go here */
-	  r.rect(n.point[0], n.point[1], 1, 1).attr({"fill": "#007bff", "stroke-width": 2, "fill-opacity": 1, r : "9px"})).push
+	  r.rect(n.point[0], n.point[1], 1, 1).attr({"fill": "#ffffff", "stroke-width": 2, "fill-opacity": 1, r : "9px"})).push
 		(r.text(n.point[0], n.point[1], n.label).attr({"font-size":"14px"}));
 
-	  /*
 	  set.items.forEach(function(el) {
 		el.tooltip(
 		  r.set().push(
-			r.rect(0, 0, 30, 30).attr(
-			  {"fill": "#fec", "stroke-width": 1, r : "9px"})
-			)
+		  	r.text(5, 5, n.tooltipText).attr({"font-size":"14px"})
 		  )
+		)
 	  });
-	  */
 
   set[0].attr({width: set[1].getBBox()['width'] + 20, height: set[1].getBBox()['height'] + 20})
   set[1].attr({x: set[1].attrs['x'] + set[0].attrs['width']/2.0})
@@ -91,21 +88,25 @@ function getSessionPriority(sessionID) {
 	  },
 	  success : function (response) {
 		priority = JSON.parse(response['Priority'])
-		console.log(priority)
 		let prevNodeID = null
 		for (var i = 0; i < priority.length; i++) {
 			ideasInPriority = priority[i]
-			console.log("Priority", i + 1)
-			console.log(ideasInPriority[0])
-			console.log(ideas)
 			let nodeLabel = ""
+			let tooltipText = ""
 			let nodeID = String(ideas[ideasInPriority[0]]['ideaID'])
+
 			for (let idea in ideasInPriority){
-				console.log(ideas[ideasInPriority[idea]])
-				nodeLabel = nodeLabel + (ideas[ideasInPriority[idea]]['ideaSessionNumber'] + " " + ideas[ideasInPriority[idea]]['idea'] + "\n")
+				let statement = ideas[ideasInPriority[idea]]['idea']
+				let nodeStatement = statement
+				if (nodeStatement.length > 25) {
+					nodeStatement = nodeStatement.substring(0, 25) + "..."
+				}
+
+				nodeLabel = nodeLabel + (ideas[ideasInPriority[idea]]['ideaSessionNumber'] + " " + nodeStatement + "\n")
+				tooltipText = tooltipText + (ideas[ideasInPriority[idea]]['ideaSessionNumber'] + " " + statement + "\n")
 			}
 
-			g.addNode(nodeID, {label: nodeLabel, render: renderSquare})
+			g.addNode(nodeID, {label: nodeLabel, render: renderSquare, tooltipText: tooltipText})
 			if (i > 0) {
 				g.addEdge(prevNodeID, nodeID, { directed: true})
 			}
